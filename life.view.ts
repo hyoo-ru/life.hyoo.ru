@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $mol_app_life extends $.$mol_app_life {
+	export class $hyoo_life extends $.$hyoo_life {
 
 		title() {
 			return super.title().replace( '{population}' , `${ this.population() }` )

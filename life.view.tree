@@ -1,4 +1,4 @@
-$mol_app_life $mol_page
+$hyoo_life $mol_page
 	title @ \Life of {population} cells
 	tools /
 		<= Store_link $mol_link
@@ -16,7 +16,7 @@ $mol_app_life $mol_page
 	-
 	sub /
 		<= Head
-		<= Map $mol_app_life_map
+		<= Map $hyoo_life_map
 			speed <= speed
 			snapshot <= snapshot \0~-2ffff~10002~-20000~-1fffe~3~10003~20003
 			snapshot_current => snapshot_current

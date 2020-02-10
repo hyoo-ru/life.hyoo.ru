@@ -1,29 +1,29 @@
-[mol_app_life_tools] {
+[hyoo_life_tools] {
 	justify-content: space-between;
 }
 
-[mol_app_life_time] {
+[hyoo_life_time] {
 	flex: 0 1 auto;
 	box-shadow: none;
 	padding: 0;
 }
 
-[mol_app_life_time_option] {
+[hyoo_life_time_option] {
 	padding: .5rem;
 	background: none;
 	box-shadow: none;
 	color: inherit;
 }
 
-[mol_app_life_store_link] {
+[hyoo_life_store_link] {
 	align-items: center;
 }
 
-[mol_app_life_store_link][mol_link_current] {
+[hyoo_life_store_link][mol_link_current] {
 	opacity: .5;
 }
 
-[mol_app_life_map] {
+[hyoo_life_map] {
 	flex: auto;
 	display: flex;
 }

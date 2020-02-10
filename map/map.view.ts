@@ -1,6 +1,6 @@
 namespace $.$$ {
 
-	export class $mol_app_life_map extends $.$mol_app_life_map {
+	export class $hyoo_life_map extends $.$hyoo_life_map {
 
 		@ $mol_mem
 		state( next? : Set<number> ) {
