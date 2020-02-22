@@ -635,11 +635,11 @@ declare namespace $ {
     class $mol_link extends $mol_view {
         dom_name(): string;
         attr(): {
-            "href": string;
-            "title": string;
-            "target": string;
-            "download": string;
-            "mol_link_current": boolean;
+            href: string;
+            title: string;
+            target: string;
+            download: string;
+            mol_link_current: boolean;
         };
         uri(): string;
         hint(): string;
@@ -649,7 +649,7 @@ declare namespace $ {
         sub(): readonly (string | number | boolean | Node | $mol_view)[];
         arg(): {};
         event(): {
-            "click": (event?: any) => any;
+            click: (event?: any) => any;
         };
         click(event?: any, force?: $mol_mem_force): any;
         event_click(event?: any, force?: $mol_mem_force): any;
@@ -786,8 +786,8 @@ declare namespace $ {
     class $mol_svg_root extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "viewBox": string;
-            "preserveAspectRatio": string;
+            viewBox: string;
+            preserveAspectRatio: string;
         };
         view_box(): string;
         aspect(): string;
@@ -805,11 +805,11 @@ declare namespace $ {
         series_x(): readonly number[];
         series_y(): readonly number[];
         attr(): {
-            "mol_plot_graph_type": string;
+            mol_plot_graph_type: string;
         };
         type(): string;
         style(): {
-            "color": string;
+            color: string;
         };
         color(): string;
         viewport(): $mol_vector_2d<$mol_vector_range<number>>;
@@ -839,11 +839,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_plot_graph_sample extends $mol_view {
         attr(): {
-            "mol_plot_graph_type": string;
+            mol_plot_graph_type: string;
         };
         type(): string;
         style(): {
-            "color": string;
+            color: string;
         };
         color(): string;
     }
@@ -935,14 +935,14 @@ declare namespace $ {
             "touch-action": string;
         };
         event(): {
-            "touchstart": (event?: any) => any;
-            "touchmove": (event?: any) => any;
-            "touchend": (event?: any) => any;
-            "mousedown": (event?: any) => any;
-            "mousemove": (event?: any) => any;
-            "mouseup": (event?: any) => any;
-            "mouseleave": (event?: any) => any;
-            "wheel": (event?: any) => any;
+            touchstart: (event?: any) => any;
+            touchmove: (event?: any) => any;
+            touchend: (event?: any) => any;
+            mousedown: (event?: any) => any;
+            mousemove: (event?: any) => any;
+            mouseup: (event?: any) => any;
+            mouseleave: (event?: any) => any;
+            wheel: (event?: any) => any;
         };
         event_start(event?: any, force?: $mol_mem_force): any;
         event_move(event?: any, force?: $mol_mem_force): any;
@@ -1013,7 +1013,7 @@ declare namespace $ {
         Meter(): $$.$mol_meter;
         Touch(): $$.$mol_touch;
         event(): {
-            "dblclick": (event?: any) => any;
+            dblclick: (event?: any) => any;
         };
         reset(event?: any, force?: $mol_mem_force): any;
     }
@@ -1050,7 +1050,7 @@ declare namespace $ {
     class $mol_svg_path extends $mol_svg {
         dom_name(): string;
         attr(): {
-            "d": string;
+            d: string;
         };
         geometry(): string;
     }
@@ -1061,7 +1061,7 @@ declare namespace $ {
         points_max(): number;
         style(): {
             "stroke-width": number;
-            "color": string;
+            color: string;
         };
         diameter(): number;
         sub(): readonly any[];
@@ -1101,9 +1101,9 @@ declare namespace $ {
         speed(): number;
         population(): number;
         event(): {
-            "mousedown": (event?: any) => any;
-            "mouseup": (event?: any) => any;
-            "dblclick": (event?: any) => any;
+            mousedown: (event?: any) => any;
+            mouseup: (event?: any) => any;
+            dblclick: (event?: any) => any;
         };
         draw_start(event?: any, force?: $mol_mem_force): any;
         draw_end(event?: any, force?: $mol_mem_force): any;
@@ -1257,16 +1257,16 @@ declare namespace $ {
         click(event?: any, force?: $mol_mem_force): any;
         event_click(event?: any, force?: $mol_mem_force): any;
         event(): {
-            "click": (event?: any) => any;
-            "keypress": (event?: any) => any;
+            click: (event?: any) => any;
+            keypress: (event?: any) => any;
         };
         event_activate(event?: any, force?: $mol_mem_force): any;
         event_key_press(event?: any, force?: $mol_mem_force): any;
         attr(): {
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
         disabled(): boolean;
         tab_index(): number;
@@ -1294,11 +1294,11 @@ declare namespace $ {
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
         attr(): {
-            "mol_theme": string;
-            "disabled": boolean;
-            "role": string;
-            "tabindex": number;
-            "title": string;
+            mol_theme: string;
+            disabled: boolean;
+            role: string;
+            tabindex: number;
+            title: string;
         };
     }
 }
@@ -1318,13 +1318,13 @@ declare namespace $ {
         minimal_height(): number;
         _event_scroll_timer(val?: any, force?: $mol_mem_force): any;
         field(): {
-            "scrollTop": any;
-            "scrollLeft": any;
+            scrollTop: any;
+            scrollLeft: any;
         };
         scroll_top(val?: any, force?: $mol_mem_force): any;
         scroll_left(val?: any, force?: $mol_mem_force): any;
         event(): {
-            "scroll": (event?: any) => any;
+            scroll: (event?: any) => any;
         };
         event_scroll(event?: any, force?: $mol_mem_force): any;
     }
@@ -1475,12 +1475,12 @@ declare namespace $ {
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
         attr(): {
-            "mol_check_checked": any;
+            mol_check_checked: any;
             "aria-checked": any;
-            "role": string;
-            "disabled": boolean;
-            "tabindex": number;
-            "title": string;
+            role: string;
+            disabled: boolean;
+            tabindex: number;
+            title: string;
         };
         checked(val?: any, force?: $mol_mem_force): any;
         sub(): readonly any[];
