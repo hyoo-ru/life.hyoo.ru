@@ -1467,6 +1467,7 @@ declare namespace $ {
         enabled(): boolean;
         value(val?: any, force?: $mol_mem_force): any;
         options(): {};
+        keys(): readonly string[];
         sub(): readonly $mol_check[];
         items(): readonly $mol_check[];
     }
@@ -1478,6 +1479,7 @@ declare namespace $.$$ {
         options(): {
             [key: string]: string;
         };
+        keys(): string[];
         items(): $mol_check[];
         option_title(key: string): string;
         option_checked(key: string, next?: boolean): boolean;
