@@ -77,16 +77,16 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		draw_start_pos( next? : number[] ) {
-			return next
+		draw_start_pos( next? : number[] | null ) {
+			return next ?? null
 		}
 
-		draw_start( event? : MouseEvent ) {
+		draw_start( event : MouseEvent ) {
 			this.draw_start_pos([ event.pageX , event.pageY ])
 		}
 
-		draw_end( event? : MouseEvent ) {
-			const start_pos = this.draw_start_pos()
+		draw_end( event : MouseEvent ) {
+			const start_pos = this.draw_start_pos()!
 			const pos = [ event.pageX , event.pageY ]
 			
 			if( Math.abs( start_pos[0] - pos[0] ) > 4 ) return
