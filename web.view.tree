@@ -1,5 +1,7 @@
 $hyoo_life $mol_page
 	title @ \Life of {population} cells
+	attr *
+		mol_theme \$mol_theme_auto
 	tools /
 		<= Store_link $mol_link
 			uri <= store_link?val \

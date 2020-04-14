@@ -4936,7 +4936,7 @@ var $;
             boxSizing: 'border-box',
             background: "var(--mol_theme_back)",
             color: "var(--mol_theme_text)",
-            zIndex: '0',
+            zIndex: '1',
             overflow: 'hidden',
             boxShadow: `inset 0 0 0 .5px ${"var(--mol_theme_line)"}`,
             ':focus': {
@@ -4993,7 +4993,7 @@ var $;
                 overflow: 'hidden',
                 background: "var(--mol_theme_back)",
                 boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
-                zIndex: '0',
+                zIndex: '1',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -5632,6 +5632,11 @@ var $;
     class $hyoo_life extends $.$mol_page {
         title() {
             return this.$.$mol_locale.text("$hyoo_life_title");
+        }
+        attr() {
+            return ({
+                "mol_theme": "$mol_theme_auto",
+            });
         }
         tools() {
             return [this.Store_link(), this.Time()];

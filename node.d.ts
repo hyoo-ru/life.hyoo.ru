@@ -1650,6 +1650,9 @@ declare namespace $ {
 declare namespace $ {
     class $hyoo_life extends $mol_page {
         title(): string;
+        attr(): {
+            mol_theme: string;
+        };
         tools(): readonly any[];
         Store_link(): $$.$mol_link;
         store_link(val?: any, force?: $mol_mem_force): any;
