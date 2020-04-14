@@ -1216,9 +1216,9 @@ declare namespace $.$$ {
         population(): number;
         points_x(): number[];
         points_y(): number[];
-        draw_start_pos(next?: number[]): number[] | undefined;
-        draw_start(event?: MouseEvent): void;
-        draw_end(event?: MouseEvent): void;
+        draw_start_pos(next?: number[] | null): number[] | null;
+        draw_start(event: MouseEvent): void;
+        draw_end(event: MouseEvent): void;
         zoom(next?: any): number;
         pan(next?: number[]): number[];
         dom_tree(): Element;
@@ -1547,7 +1547,7 @@ declare namespace $ {
         buffer(next?: Uint8Array, force?: $mol_mem_force): Uint8Array;
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
-        relate(base?: $mol_file): any;
+        relate(base?: $mol_file): string;
         append(next: Uint8Array | string): void;
     }
 }
@@ -1680,6 +1680,7 @@ declare namespace $.$$ {
 declare namespace $ {
 }
 
+/// <reference types="node" />
 declare namespace $ {
-    function $mol_exec(dir: string, command: string, ...args: string[]): any;
+    function $mol_exec(dir: string, command: string, ...args: string[]): import("child_process").SpawnSyncReturns<Buffer>;
 }

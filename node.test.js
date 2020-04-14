@@ -4314,7 +4314,7 @@ var $;
                 return [...this.state().keys()].map(key => $.$mol_coord_low(key));
             }
             draw_start_pos(next) {
-                return next;
+                return next !== null && next !== void 0 ? next : null;
             }
             draw_start(event) {
                 this.draw_start_pos([event.pageX, event.pageY]);
@@ -4818,9 +4818,6 @@ var $;
         }
         Head() {
             return ((obj) => {
-                obj.attr = () => ({
-                    "mol_theme": "$mol_theme_base",
-                });
                 obj.sub = () => this.head();
                 return obj;
             })(new this.$.$mol_view());
@@ -4862,9 +4859,6 @@ var $;
         }
         Foot() {
             return ((obj) => {
-                obj.attr = () => ({
-                    "mol_theme": "$mol_theme_base",
-                });
                 obj.sub = () => this.foot();
                 return obj;
             })(new this.$.$mol_view());
@@ -4950,6 +4944,9 @@ var $;
                 margin: 0,
                 minHeight: calc(`1.5em + 2rem`),
                 padding: rem(.5),
+                background: "var(--mol_theme_back)",
+                boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
+                zIndex: '0',
             },
             Title: {
                 flex: {
@@ -4960,6 +4957,7 @@ var $;
                 padding: rem(.5),
                 wordBreak: 'normal',
                 cursor: 'default',
+                fontWeight: 'bolder',
                 ':empty': {
                     display: 'none',
                 },
@@ -4986,6 +4984,9 @@ var $;
                 flex: 'none',
                 margin: 0,
                 overflow: 'hidden',
+                background: "var(--mol_theme_back)",
+                boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
+                zIndex: '0',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
