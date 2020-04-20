@@ -1977,8 +1977,12 @@ var $;
     function $mol_deprecated(message) {
         return (host, field, descr) => {
             const value = descr.value;
+            let warned = false;
             descr.value = function $mol_deprecated_wrapper(...args) {
-                console.warn(`${host.constructor.name}::${field} is deprecated. ${message}`);
+                if (!warned) {
+                    console.warn(`${host.constructor.name}::${field} is deprecated. ${message}`);
+                    warned = true;
+                }
                 return value.call(this, ...args);
             };
         };
@@ -1994,6 +1998,49 @@ var $;
 //pick.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    const { per } = $.$mol_style_unit;
+    class $mol_style_func extends $.$mol_decor {
+        constructor(name, value) {
+            super(value);
+            this.name = name;
+        }
+        prefix() { return this.name + '('; }
+        postfix() { return ')'; }
+        static calc(value) {
+            return new $mol_style_func('calc', value);
+        }
+        static vary(name) {
+            return new $mol_style_func('var', name);
+        }
+        static url(href) {
+            return new $mol_style_func('url', JSON.stringify(href));
+        }
+        static hsla(hue, saturation, lightness, alpha) {
+            return new $mol_style_func('hsla', [hue, per(saturation), per(lightness), alpha]);
+        }
+    }
+    $.$mol_style_func = $mol_style_func;
+})($ || ($ = {}));
+//func.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    const { vary } = $.$mol_style_func;
+    $.$mol_theme = {
+        back: vary('--mol_theme_back'),
+        hover: vary('--mol_theme_hover'),
+        current: vary('--mol_theme_current'),
+        text: vary('--mol_theme_text'),
+        control: vary('--mol_theme_control'),
+        shade: vary('--mol_theme_shade'),
+        line: vary('--mol_theme_line'),
+        focus: vary('--mol_theme_focus'),
+        field: vary('--mol_theme_field'),
+    };
+})($ || ($ = {}));
 //theme.js.map
 ;
 "use strict";
@@ -2315,23 +2362,157 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_style_func extends $.$mol_decor {
-        constructor(value, name) {
-            super(value);
-            this.name = name;
-        }
-        prefix() { return this.name + '('; }
-        postfix() { return ')'; }
-        static calc(value) {
-            return new $mol_style_func(value, 'calc');
-        }
-        static fit_content(value) {
-            return new $mol_style_func(value, 'fit-content');
-        }
-    }
-    $.$mol_style_func = $mol_style_func;
+    $.$mol_colors = {
+        aliceblue: "#f0f8ff",
+        antiquewhite: "#faebd7",
+        aqua: "#00ffff",
+        aquamarine: "#7fffd4",
+        azure: "#f0ffff",
+        beige: "#f5f5dc",
+        bisque: "#ffe4c4",
+        black: "#000000",
+        blanchedalmond: "#ffebcd",
+        blue: "#0000ff",
+        blueviolet: "#8a2be2",
+        brown: "#a52a2a",
+        burlywood: "#deb887",
+        cadetblue: "#5f9ea0",
+        chartreuse: "#7fff00",
+        chocolate: "#d2691e",
+        coral: "#ff7f50",
+        cornflowerblue: "#6495ed",
+        cornsilk: "#fff8dc",
+        crimson: "#dc143c",
+        cyan: "#00ffff",
+        darkblue: "#00008b",
+        darkcyan: "#008b8b",
+        darkgoldenrod: "#b8860b",
+        darkgray: "#a9a9a9",
+        darkgreen: "#006400",
+        darkgrey: "#a9a9a9",
+        darkkhaki: "#bdb76b",
+        darkmagenta: "#8b008b",
+        darkolivegreen: "#556b2f",
+        darkorange: "#ff8c00",
+        darkorchid: "#9932cc",
+        darkred: "#8b0000",
+        darksalmon: "#e9967a",
+        darkseagreen: "#8fbc8f",
+        darkslateblue: "#483d8b",
+        darkslategrey: "#2f4f4f",
+        darkturquoise: "#00ced1",
+        darkviolet: "#9400d3",
+        deeppink: "#ff1493",
+        deepskyblue: "#00bfff",
+        dimgray: "#696969",
+        dimgrey: "#696969",
+        dodgerblue: "#1e90ff",
+        firebrick: "#b22222",
+        floralwhite: "#fffaf0",
+        forestgreen: "#228b22",
+        fuchsia: "#ff00ff",
+        gainsboro: "#dcdcdc",
+        ghostwhite: "#f8f8ff",
+        gold: "#ffd700",
+        goldenrod: "#daa520",
+        gray: "#808080",
+        green: "#008000",
+        greenyellow: "#adff2f",
+        grey: "#808080",
+        honeydew: "#f0fff0",
+        hotpink: "#ff69b4",
+        indianred: "#cd5c5c",
+        indigo: "#4b0082",
+        ivory: "#fffff0",
+        khaki: "#f0e68c",
+        lavender: "#e6e6fa",
+        lavenderblush: "#fff0f5",
+        lawngreen: "#7cfc00",
+        lemonchiffon: "#fffacd",
+        lightblue: "#add8e6",
+        lightcoral: "#f08080",
+        lightcyan: "#e0ffff",
+        lightgoldenrodyellow: "#fafad2",
+        lightgray: "#d3d3d3",
+        lightgreen: "#90ee90",
+        lightgrey: "#d3d3d3",
+        lightpink: "#ffb6c1",
+        lightsalmon: "#ffa07a",
+        lightseagreen: "#20b2aa",
+        lightskyblue: "#87cefa",
+        lightslategray: "#778899",
+        lightslategrey: "#778899",
+        lightsteelblue: "#b0c4de",
+        lightyellow: "#ffffe0",
+        lime: "#00ff00",
+        limegreen: "#32cd32",
+        linen: "#faf0e6",
+        magenta: "#ff00ff",
+        maroon: "#800000",
+        mediumaquamarine: "#66cdaa",
+        mediumblue: "#0000cd",
+        mediumorchid: "#ba55d3",
+        mediumpurple: "#9370db",
+        mediumseagreen: "#3cb371",
+        mediumslateblue: "#7b68ee",
+        mediumspringgreen: "#00fa9a",
+        mediumturquoise: "#48d1cc",
+        mediumvioletred: "#c71585",
+        midnightblue: "#191970",
+        mintcream: "#f5fffa",
+        mistyrose: "#ffe4e1",
+        moccasin: "#ffe4b5",
+        navajowhite: "#ffdead",
+        navy: "#000080",
+        oldlace: "#fdf5e6",
+        olive: "#808000",
+        olivedrab: "#6b8e23",
+        orange: "#ffa500",
+        orangered: "#ff4500",
+        orchid: "#da70d6",
+        palegoldenrod: "#eee8aa",
+        palegreen: "#98fb98",
+        paleturquoise: "#afeeee",
+        palevioletred: "#db7093",
+        papayawhip: "#ffefd5",
+        peachpuff: "#ffdab9",
+        peru: "#cd853f",
+        pink: "#ffc0cb",
+        plum: "#dda0dd",
+        powderblue: "#b0e0e6",
+        purple: "#800080",
+        rebeccapurple: "#663399",
+        red: "#ff0000",
+        rosybrown: "#bc8f8f",
+        royalblue: "#4169e1",
+        saddlebrown: "#8b4513",
+        salmon: "#fa8072",
+        sandybrown: "#f4a460",
+        seagreen: "#2e8b57",
+        seashell: "#fff5ee",
+        sienna: "#a0522d",
+        silver: "#c0c0c0",
+        skyblue: "#87ceeb",
+        slateblue: "#6a5acd",
+        slategray: "#708090",
+        slategrey: "#708090",
+        snow: "#fffafa",
+        springgreen: "#00ff7f",
+        steelblue: "#4682b4",
+        tan: "#d2b48c",
+        teal: "#008080",
+        thistle: "#d8bfd8",
+        tomato: "#ff6347",
+        turquoise: "#40e0d0",
+        violet: "#ee82ee",
+        wheat: "#f5deb3",
+        white: "#ffffff",
+        whitesmoke: "#f5f5f5",
+        yellow: "#ffff00",
+        yellowgreen: "#9acd32",
+    };
 })($ || ($ = {}));
-//func.js.map
+//colors.js.map
 ;
 "use strict";
 //properties.js.map
@@ -2351,6 +2532,7 @@ var $;
     function $mol_style_sheet(Component, config0) {
         let rules = [];
         const block = $.$mol_dom_qname($.$mol_func_name(Component));
+        const kebab = (name) => name.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
         const make_class = (prefix, path, config) => {
             const props = [];
             const selector = (prefix, path) => {
@@ -2360,19 +2542,34 @@ var $;
             };
             for (const key of Object.keys(config).reverse()) {
                 if (/^[a-z]/.test(key)) {
-                    const name = key.replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
-                    const val = config[key];
-                    if (Array.isArray(val)) {
-                        props.push(`\t${name}: ${val.join(' ')};\n`);
-                    }
-                    else if (val.constructor === Object) {
-                        for (let suffix in val) {
-                            props.push(`\t${name}-${suffix}: ${val[suffix]};\n`);
+                    const addProp = (keys, val) => {
+                        if (Array.isArray(val)) {
+                            if (Object(val[0]) === val[0]) {
+                                val = val.map(v => {
+                                    return Object.entries(v).map(([n, a]) => {
+                                        if (a === true)
+                                            return kebab(n);
+                                        if (a === false)
+                                            return null;
+                                        return String(a);
+                                    }).filter(Boolean).join(' ');
+                                }).join(',');
+                            }
+                            else {
+                                val = val.join(' ');
+                            }
+                            props.push(`\t${keys.join('-')}: ${val};\n`);
                         }
-                    }
-                    else {
-                        props.push(`\t${name}: ${val};\n`);
-                    }
+                        else if (val.constructor === Object) {
+                            for (let suffix in val) {
+                                addProp([...keys, kebab(suffix)], val[suffix]);
+                            }
+                        }
+                        else {
+                            props.push(`\t${keys.join('-')}: ${val};\n`);
+                        }
+                    };
+                    addProp([kebab(key)], config[key]);
                 }
                 else if (/^[A-Z]/.test(key)) {
                     make_class(prefix, [...path, key.toLowerCase()], config[key]);
@@ -2529,24 +2726,30 @@ var $;
     const { rem } = $.$mol_style_unit;
     $.$mol_style_define($.$mol_link, {
         textDecoration: 'none',
-        color: "var(--mol_theme_control)",
-        stroke: 'currentColor',
+        color: $.$mol_theme.control,
+        stroke: 'currentcolor',
         cursor: 'pointer',
         padding: [rem(.5), rem(1)],
         boxSizing: 'border-box',
         position: 'relative',
         ':hover': {
-            backgroundColor: "var(--mol_theme_hover)",
+            background: {
+                color: $.$mol_theme.hover,
+            },
         },
         ':focus': {
             outline: 'none',
-            backgroundColor: "var(--mol_theme_hover)",
+            background: {
+                color: $.$mol_theme.hover,
+            }
         },
         '@': {
             mol_link_current: {
                 'true': {
-                    backgroundColor: "var(--mol_theme_current)",
-                    color: "var(--mol_theme_text)",
+                    background: {
+                        color: $.$mol_theme.current,
+                    },
+                    color: $.$mol_theme.text,
                 }
             }
         },
@@ -4791,13 +4994,19 @@ var $;
                 height: rem(.5),
             },
             '::-webkit-scrollbar-corner': {
-                background: "var(--mol_theme_line)",
+                background: {
+                    color: $.$mol_theme.line,
+                },
             },
             '::-webkit-scrollbar-track': {
-                background: "var(--mol_theme_line)",
+                background: {
+                    color: $.$mol_theme.line,
+                },
             },
             '::-webkit-scrollbar-thumb': {
-                background: "var(--mol_theme_control)",
+                background: {
+                    color: $.$mol_theme.control,
+                },
             },
             '@media': {
                 'print': {
@@ -4927,11 +5136,13 @@ var $;
             maxWidth: per(100),
             maxHeight: per(100),
             boxSizing: 'border-box',
-            background: "var(--mol_theme_back)",
-            color: "var(--mol_theme_text)",
-            zIndex: '0',
+            background: {
+                color: $.$mol_theme.back,
+            },
+            color: $.$mol_theme.text,
+            zIndex: 0,
             overflow: 'hidden',
-            boxShadow: `inset 0 0 0 .5px ${"var(--mol_theme_line)"}`,
+            boxShadow: `inset 0 0 0 .5px ${$.$mol_theme.line}`,
             ':focus': {
                 outline: 'none',
             },
@@ -4944,15 +5155,17 @@ var $;
                 margin: 0,
                 minHeight: calc(`1.5em + 2rem`),
                 padding: rem(.5),
-                background: "var(--mol_theme_back)",
+                background: {
+                    color: $.$mol_theme.back,
+                },
                 boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
-                zIndex: '1',
+                zIndex: 1,
             },
             Title: {
                 flex: {
                     grow: 1000,
                     shrink: 1,
-                    basis: $.$mol_style_unit.per(50),
+                    basis: per(50),
                 },
                 padding: rem(.5),
                 wordBreak: 'normal',
@@ -4974,7 +5187,7 @@ var $;
                 flex: {
                     grow: 1000,
                     shrink: 1,
-                    basis: $.$mol_style_unit.per(100),
+                    basis: per(100),
                 },
                 margin: 0,
             },
@@ -4984,9 +5197,11 @@ var $;
                 flex: 'none',
                 margin: 0,
                 overflow: 'hidden',
-                background: "var(--mol_theme_back)",
+                background: {
+                    color: $.$mol_theme.back,
+                },
                 boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
-                zIndex: '1',
+                zIndex: 1,
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -7559,10 +7774,10 @@ var $;
             class $mol_style_sheet_test extends $.$mol_view {
             }
             const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
-                color: 'red',
                 display: 'block',
+                zIndex: 1,
             });
-            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tcolor: red;\n\tdisplay: block;\n}\n');
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tdisplay: block;\n\tz-index: 1;\n}\n');
         },
         'various units'() {
             class $mol_style_sheet_test extends $.$mol_view {
@@ -7577,7 +7792,7 @@ var $;
         'various functions'() {
             class $mol_style_sheet_test extends $.$mol_view {
             }
-            const { calc, fit_content } = $.$mol_style_func;
+            const { calc } = $.$mol_style_func;
             const { px, per } = $.$mol_style_unit;
             const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
                 width: calc(`${per(100)} - ${px(1)}`),
@@ -7603,6 +7818,46 @@ var $;
                 padding: [0, 'auto']
             });
             $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tpadding: 0 auto;\n}\n');
+        },
+        'sequenced values'() {
+            class $mol_style_sheet_test extends $.$mol_view {
+            }
+            const { url } = $.$mol_style_func;
+            const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
+                background: {
+                    image: [[url('foo')], [url('bar')]],
+                },
+            });
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tbackground-image: url("foo"),url("bar");\n}\n');
+        },
+        'sequenced structs'() {
+            class $mol_style_sheet_test extends $.$mol_view {
+            }
+            const { rem } = $.$mol_style_unit;
+            const { hsla } = $.$mol_style_func;
+            const sheet = $.$mol_style_sheet($mol_style_sheet_test, {
+                box: {
+                    shadow: [
+                        {
+                            inset: true,
+                            x: 0,
+                            y: 0,
+                            blur: rem(.5),
+                            spread: 0,
+                            color: 'red',
+                        },
+                        {
+                            inset: false,
+                            x: 0,
+                            y: 0,
+                            blur: rem(.5),
+                            spread: 0,
+                            color: 'blue',
+                        },
+                    ],
+                },
+            });
+            $.$mol_assert_equal(sheet, '[mol_style_sheet_test] {\n\tbox-shadow: inset 0 0 0.5rem 0 red,0 0 0.5rem 0 blue;\n}\n');
         },
         'component block styles with pseudo class'() {
             class $mol_style_sheet_test extends $.$mol_view {
