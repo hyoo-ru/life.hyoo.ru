@@ -5142,7 +5142,7 @@ var $;
             color: $.$mol_theme.text,
             zIndex: 0,
             overflow: 'hidden',
-            boxShadow: `inset 0 0 0 .5px ${$.$mol_theme.line}`,
+            boxShadow: `0 0 .5rem hsla(0,0%,0%,.25)`,
             ':focus': {
                 outline: 'none',
             },
@@ -5170,7 +5170,7 @@ var $;
                 padding: rem(.5),
                 wordBreak: 'normal',
                 cursor: 'default',
-                fontWeight: 'bolder',
+                textShadow: '0 0',
                 ':empty': {
                     display: 'none',
                 },
