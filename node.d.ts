@@ -554,8 +554,8 @@ declare namespace $ {
         state_key(suffix?: string): string;
         dom_name(): string;
         dom_name_space(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
-        sub_visible(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly $mol_view_content[];
+        sub_visible(): readonly $mol_view_content[];
         minimal_width(): number;
         maximal_width(): number;
         minimal_height(): number;
@@ -871,7 +871,7 @@ declare namespace $ {
         disabled(): boolean;
         tab_index(): number;
         hint(): string;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly $mol_view_content[];
     }
 }
 
@@ -1059,10 +1059,10 @@ declare namespace $ {
         Title(): $$.$mol_button;
         event_top(val?: any, force?: $mol_mem_force): any;
         Tools(): $mol_view;
-        tools(): readonly (string | number | boolean | $mol_view | Node)[];
+        tools(): readonly $mol_view_content[];
         Body(): $$.$mol_scroll;
         body_scroll_top(val?: any, force?: $mol_mem_force): any;
-        body(): readonly (string | number | boolean | $mol_view | Node)[];
+        body(): readonly $mol_view_content[];
         Foot(): $mol_view;
         foot(): readonly $mol_view[];
     }
@@ -1189,7 +1189,7 @@ declare namespace $ {
         target(): string;
         file_name(): string;
         current(): boolean;
-        sub(): readonly (string | number | boolean | $mol_view | Node)[];
+        sub(): readonly $mol_view_content[];
         arg(): {};
         event(): {
             click: (event?: any) => any;
