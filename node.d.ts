@@ -1187,6 +1187,38 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_plugin extends $mol_view {
+        dom_node(next?: Element): Element;
+        attr_static(): {
+            [key: string]: string | number | boolean;
+        };
+        event(): {
+            [key: string]: (event: Event) => void;
+        };
+        render(): void;
+    }
+}
+
+declare namespace $ {
+    class $mol_theme_auto extends $mol_plugin {
+        attr(): {
+            mol_theme: string;
+        };
+        theme(): string;
+    }
+}
+
+declare namespace $ {
+    function $mol_lights(this: $mol_ambient_context, next?: boolean): boolean;
+}
+
+declare namespace $.$$ {
+    class $mol_theme_auto extends $.$mol_theme_auto {
+        theme(): "$mol_theme_light" | "$mol_theme_dark";
+    }
+}
+
+declare namespace $ {
     class $mol_link extends $mol_view {
         dom_name(): string;
         attr(): {
@@ -1555,19 +1587,6 @@ declare namespace $.$$ {
         dimensions(): $mol_vector_2d<$mol_vector_range<number>>;
         color(): string;
         front(): readonly $.$mol_svg[];
-    }
-}
-
-declare namespace $ {
-    class $mol_plugin extends $mol_view {
-        dom_node(next?: Element): Element;
-        attr_static(): {
-            [key: string]: string | number | boolean;
-        };
-        event(): {
-            [key: string]: (event: Event) => void;
-        };
-        render(): void;
     }
 }
 
