@@ -1,8 +1,10 @@
 $hyoo_life $mol_page
 	title @ \Life of {population} cells
-	attr *
-		mol_theme \$mol_theme_auto
+	plugins /
+		<= Theme $mol_theme_auto
 	tools /
+		<= Source_link $mol_link_source
+			uri \https://github.com/hyoo-ru/life.hyoo.ru
 		<= Store_link $mol_link
 			uri <= store_link?val \
 			hint <= store_link_hint @ \Store snapshot
