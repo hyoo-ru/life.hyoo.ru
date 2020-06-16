@@ -2119,12 +2119,16 @@ var $;
             const node = this.dom_node(next);
             try {
                 $.$mol_dom_render_attributes(node, { mol_view_error: null });
-                for (let plugin of this.plugins()) {
-                    if (plugin instanceof $.$mol_plugin) {
-                        plugin.render();
+                try {
+                    this.render();
+                }
+                finally {
+                    for (let plugin of this.plugins()) {
+                        if (plugin instanceof $.$mol_plugin) {
+                            plugin.dom_tree();
+                        }
                     }
                 }
-                this.render();
             }
             catch (error) {
                 const need_catch = $.$mol_fail_catch(error);
@@ -3961,6 +3965,7 @@ var $;
                     background: {
                         color: $.$mol_theme.back,
                     },
+                    color: $.$mol_theme.text,
                 }
             }
         },
@@ -4215,6 +4220,41 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_github_circle extends $.$mol_icon {
+        path() {
+            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
+        }
+    }
+    $.$mol_icon_github_circle = $mol_icon_github_circle;
+})($ || ($ = {}));
+//circle.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_link_source extends $.$mol_link {
+        hint() {
+            return this.$.$mol_locale.text("$mol_link_source_hint");
+        }
+        sub() {
+            return [this.Icon()];
+        }
+        Icon() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_icon_github_circle());
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_source.prototype, "Icon", null);
+    $.$mol_link_source = $mol_link_source;
+})($ || ($ = {}));
+//source.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_stored extends $.$mol_icon {
         path() {
             return "M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z";
@@ -4400,7 +4440,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/switch/switch.view.css", "[mol_switch] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_skin_round);\n\tbox-shadow: inset 0 0 0 .5px var(--mol_theme_line);\n}\n\n[mol_switch_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_switch_option][mol_check_checked] {\n\tbackground: var(--mol_theme_current);\n\tcolor: var(--mol_theme_text);\n\tcolor: inherit;\n\tz-index: 1;\n}\n");
+    $.$mol_style_attach("mol/switch/switch.view.css", "[mol_switch] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_skin_round);\n}\n\n[mol_switch_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_switch_option][mol_check_checked] {\n\tbackground: var(--mol_theme_current);\n\tcolor: var(--mol_theme_text);\n\tcolor: inherit;\n\tz-index: 1;\n}\n");
 })($ || ($ = {}));
 //switch.view.css.js.map
 ;
@@ -6069,13 +6109,22 @@ var $;
         title() {
             return this.$.$mol_locale.text("$hyoo_life_title");
         }
-        attr() {
-            return ({
-                "mol_theme": "$mol_theme_auto",
-            });
+        plugins() {
+            return [this.Theme()];
+        }
+        Theme() {
+            return ((obj) => {
+                return obj;
+            })(new this.$.$mol_theme_auto());
         }
         tools() {
-            return [this.Store_link(), this.Time()];
+            return [this.Source_link(), this.Store_link(), this.Time()];
+        }
+        Source_link() {
+            return ((obj) => {
+                obj.uri = () => "https://github.com/hyoo-ru/life.hyoo.ru";
+                return obj;
+            })(new this.$.$mol_link_source());
         }
         Store_link() {
             return ((obj) => {
@@ -6143,6 +6192,12 @@ var $;
             return "0~-2ffff~10002~-20000~-1fffe~3~10003~20003";
         }
     }
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_life.prototype, "Theme", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_life.prototype, "Source_link", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_life.prototype, "Store_link", null);

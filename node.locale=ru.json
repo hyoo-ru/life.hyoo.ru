@@ -4,5 +4,6 @@
 	"$hyoo_life_time_fastest_label": "Рьяно",
 	"$hyoo_life_time_slow_label": "Лениво",
 	"$hyoo_life_time_slowest_label": "Тягуче",
-	"$hyoo_life_title": "Жизнь из {population} клеток"
+	"$hyoo_life_title": "Жизнь из {population} клеток",
+	"$mol_link_source_hint": "Исходные коды"
 }

@@ -4,5 +4,6 @@
 	"$hyoo_life_time_fastest_label": "Fastest",
 	"$hyoo_life_time_slow_label": "Slow",
 	"$hyoo_life_time_slowest_label": "Slowest",
-	"$hyoo_life_title": "Life of {population} cells"
+	"$hyoo_life_title": "Life of {population} cells",
+	"$mol_link_source_hint": "Source code"
 }

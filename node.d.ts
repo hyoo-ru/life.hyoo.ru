@@ -1362,6 +1362,20 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_github_circle extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_link_source extends $mol_link {
+        hint(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_github_circle;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_stored extends $mol_icon {
         path(): string;
     }
@@ -1845,10 +1859,10 @@ declare namespace $.$$ {
 declare namespace $ {
     class $hyoo_life extends $mol_page {
         title(): string;
-        attr(): {
-            mol_theme: string;
-        };
+        plugins(): readonly any[];
+        Theme(): $$.$mol_theme_auto;
         tools(): readonly any[];
+        Source_link(): $mol_link_source;
         Store_link(): $$.$mol_link;
         store_link(val?: any, force?: $mol_mem_force): any;
         store_link_hint(): string;
