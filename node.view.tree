@@ -10,7 +10,7 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
+	minimal_height 32
 	click?event null
 	event_click?event null
 	event *
@@ -130,7 +130,6 @@ $mol_check $mol_button_minor
 					<= title \
 
 $mol_switch $mol_view
-	minimal_height 40
 	Option!id $mol_switch_option
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \
