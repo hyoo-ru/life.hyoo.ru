@@ -3874,7 +3874,7 @@ var $;
             return "a";
         }
         attr() {
-            return Object.assign(Object.assign({}, super.attr()), { href: this.uri(), title: this.hint(), target: this.target(), download: this.file_name(), mol_link_current: this.current(), mol_theme: this.theme() });
+            return Object.assign(Object.assign({}, super.attr()), { href: this.uri(), title: this.hint(), target: this.target(), download: this.file_name(), mol_link_current: this.current() });
         }
         sub() {
             return [
@@ -3901,9 +3901,6 @@ var $;
         }
         current() {
             return false;
-        }
-        theme() {
-            return null;
         }
         event_click(event) {
             if (event !== undefined)
@@ -4035,6 +4032,7 @@ var $;
                         color: $.$mol_theme.back,
                     },
                     color: $.$mol_theme.text,
+                    textShadow: '0 0',
                 }
             }
         },
@@ -4076,9 +4074,6 @@ var $;
             }
             minimal_height() {
                 return Math.max(super.minimal_height() || 32);
-            }
-            theme() {
-                return this.current() ? '$mol_theme_base' : null;
             }
         }
         __decorate([
@@ -4723,10 +4718,11 @@ var $;
 (function ($) {
     class $mol_switch extends $.$mol_view {
         Option(id) {
-            const obj = new this.$.$mol_switch_option();
+            const obj = new this.$.$mol_check();
             obj.checked = (val) => this.option_checked(id, val);
             obj.label = () => this.option_label(id);
             obj.enabled = () => this.option_enabled(id);
+            obj.minimal_height = () => 24;
             return obj;
         }
         value(val) {
@@ -4776,25 +4772,13 @@ var $;
         $.$mol_mem_key
     ], $mol_switch.prototype, "option_checked", null);
     $.$mol_switch = $mol_switch;
-    class $mol_switch_option extends $.$mol_check {
-        minimal_height() {
-            return 24;
-        }
-        attr() {
-            return Object.assign(Object.assign({}, super.attr()), { mol_theme: this.theme() });
-        }
-        theme() {
-            return "";
-        }
-    }
-    $.$mol_switch_option = $mol_switch_option;
 })($ || ($ = {}));
 //switch.view.tree.js.map
 ;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/switch/switch.view.css", "[mol_switch] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_skin_round);\n}\n\n[mol_switch_option] {\n\tflex: 0 1 auto;\n}\n");
+    $.$mol_style_attach("mol/switch/switch.view.css", "[mol_switch] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tflex: 1 1 auto;\n\tborder-radius: var(--mol_skin_round);\n}\n\n[mol_switch_option] {\n\tflex: 0 1 auto;\n}\n\n[mol_switch_option][mol_check_checked=\"true\"] {\n\tcolor: var(--mol_theme_text);\n\ttext-shadow: 0 0;\n}\n");
 })($ || ($ = {}));
 //switch.view.css.js.map
 ;
@@ -4832,12 +4816,6 @@ var $;
             $.$mol_mem
         ], $mol_switch.prototype, "items", null);
         $$.$mol_switch = $mol_switch;
-        class $mol_switch_option extends $.$mol_switch_option {
-            theme() {
-                return this.checked() ? '$mol_theme_base' : '';
-            }
-        }
-        $$.$mol_switch_option = $mol_switch_option;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
 //switch.view.js.map
