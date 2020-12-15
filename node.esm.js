@@ -3279,11 +3279,13 @@ var $;
             },
             Title: {
                 minHeight: rem(2),
+                margin: 0,
                 padding: $.$mol_gap.text,
                 wordBreak: 'normal',
                 textShadow: '0 0',
                 font: {
                     size: 'inherit',
+                    weight: 'normal',
                 },
                 flex: {
                     grow: 1000,
