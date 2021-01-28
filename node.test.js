@@ -5932,15 +5932,15 @@ var $;
         graphs_positioned() {
             return this.graphs();
         }
-        Meter() {
-            const obj = new this.$.$mol_meter();
-            return obj;
-        }
         width() {
             return this.Meter().width();
         }
         height() {
             return this.Meter().height();
+        }
+        Meter() {
+            const obj = new this.$.$mol_meter();
+            return obj;
         }
         Touch() {
             const obj = new this.$.$mol_touch();
@@ -6685,17 +6685,17 @@ var $;
         snapshot() {
             return "0~-2ffff~10002~-20000~-1fffe~3~10003~20003";
         }
-        Map() {
-            const obj = new this.$.$hyoo_life_map();
-            obj.speed = () => this.speed();
-            obj.snapshot = () => this.snapshot();
-            return obj;
-        }
         snapshot_current() {
             return this.Map().snapshot_current();
         }
         population() {
             return this.Map().population();
+        }
+        Map() {
+            const obj = new this.$.$hyoo_life_map();
+            obj.speed = () => this.speed();
+            obj.snapshot = () => this.snapshot();
+            return obj;
         }
     }
     __decorate([
@@ -6851,12 +6851,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_binding_right extends $.$mol_view {
+        outer_width(v) {
+            return this.Test().width(v);
+        }
         Test() {
             const obj = new this.$.$mol_view_tree_test_binding_right_test();
             return obj;
-        }
-        outer_width(v) {
-            return this.Test().width(v);
         }
     }
     __decorate([
