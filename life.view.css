@@ -9,10 +9,7 @@
 }
 
 [hyoo_life_time_option] {
-	padding: .5rem;
-	background: none;
-	box-shadow: none;
-	color: inherit;
+	padding: var(--mol_gap_text);
 }
 
 [hyoo_life_store_link] {
