@@ -3451,6 +3451,18 @@ var $;
 var $;
 (function ($) {
     var _a;
+    const TextDecoder = (_a = globalThis.TextDecoder) !== null && _a !== void 0 ? _a : $node.util.TextDecoder;
+    function $mol_charset_decode(value, code = 'utf8') {
+        return new TextDecoder(code).decode(value);
+    }
+    $.$mol_charset_decode = $mol_charset_decode;
+})($ || ($ = {}));
+//decode.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    var _a;
     const TextEncoder = (_a = globalThis.TextEncoder) !== null && _a !== void 0 ? _a : $node.util.TextEncoder;
     const encoder = new TextEncoder();
     function $mol_charset_encode(value) {
@@ -3459,18 +3471,6 @@ var $;
     $.$mol_charset_encode = $mol_charset_encode;
 })($ || ($ = {}));
 //encode.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    var _a;
-    const TextDecoder = (_a = globalThis.TextDecoder) !== null && _a !== void 0 ? _a : $node.util.TextDecoder;
-    function $mol_charset_decode(value, code = 'utf8') {
-        return new TextDecoder(code).decode(value);
-    }
-    $.$mol_charset_decode = $mol_charset_decode;
-})($ || ($ = {}));
-//decode.js.map
 ;
 "use strict";
 var $;
@@ -3544,8 +3544,14 @@ var $;
             return match ? match[1].substring(1) : '';
         }
         text(next, force) {
-            const buffer = next === undefined ? undefined : $.$mol_charset_encode(next);
-            return $.$mol_charset_decode(this.buffer(buffer, force));
+            if (next === undefined) {
+                return $.$mol_charset_decode(this.buffer(undefined, force));
+            }
+            else {
+                const buffer = next === undefined ? undefined : $.$mol_charset_encode(next);
+                this.buffer(buffer, force);
+                return next;
+            }
         }
         fail(error) {
             this.buffer(error, $.$mol_mem_force_fail);
@@ -3593,9 +3599,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_file.prototype, "exists", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_file.prototype, "text", null);
     __decorate([
         $.$mol_mem_key
     ], $mol_file, "absolute", null);
@@ -6729,7 +6732,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("hyoo/life/life.view.css", "[hyoo_life_tools] {\n\tjustify-content: space-between;\n}\n\n[hyoo_life_time] {\n\tflex: 0 1 auto;\n\tbox-shadow: none;\n\tpadding: 0;\n}\n\n[hyoo_life_time_option] {\n\tpadding: .5rem;\n\tbackground: none;\n\tbox-shadow: none;\n\tcolor: inherit;\n}\n\n[hyoo_life_store_link] {\n\talign-items: center;\n}\n\n[hyoo_life_store_link][mol_link_current] {\n\topacity: .5;\n}\n\n[hyoo_life_map] {\n\tflex: auto;\n\tdisplay: flex;\n}\n");
+    $.$mol_style_attach("hyoo/life/life.view.css", "[hyoo_life_tools] {\n\tjustify-content: space-between;\n}\n\n[hyoo_life_time] {\n\tflex: 0 1 auto;\n\tbox-shadow: none;\n\tpadding: 0;\n}\n\n[hyoo_life_time_option] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_life_store_link] {\n\talign-items: center;\n}\n\n[hyoo_life_store_link][mol_link_current] {\n\topacity: .5;\n}\n\n[hyoo_life_map] {\n\tflex: auto;\n\tdisplay: flex;\n}\n");
 })($ || ($ = {}));
 //life.view.css.js.map
 ;
@@ -9365,19 +9368,6 @@ var $;
 var $;
 (function ($) {
     $.$mol_test({
-        'encode utf8 string'() {
-            const str = 'Hello, ΧΨΩЫ';
-            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
-            $.$mol_assert_like($.$mol_charset_encode(str), encoded);
-        },
-    });
-})($ || ($ = {}));
-//encode.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
         'decode utf8 string'() {
             const str = 'Hello, ΧΨΩЫ';
             const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
@@ -9391,6 +9381,19 @@ var $;
     });
 })($ || ($ = {}));
 //decode.test.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_test({
+        'encode utf8 string'() {
+            const str = 'Hello, ΧΨΩЫ';
+            const encoded = new Uint8Array([72, 101, 108, 108, 111, 44, 32, 206, 167, 206, 168, 206, 169, 208, 171]);
+            $.$mol_assert_like($.$mol_charset_encode(str), encoded);
+        },
+    });
+})($ || ($ = {}));
+//encode.test.js.map
 ;
 "use strict";
 var $;
