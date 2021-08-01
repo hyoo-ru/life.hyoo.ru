@@ -2,11 +2,11 @@ $hyoo_life_map $mol_plot_pane
 	gap_hor 0
 	gap_vert 0
 	-
-	pan?val /
+	pan?val $mol_vector_2d /
 		0
 		0
 	zoom?val 16
-	scale /
+	scale $mol_vector_2d /
 		<= zoom
 		<= zoom
 	shift <= pan

@@ -114,7 +114,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		pan( next? : number[] ) {
+		pan( next? : $mol_vector_2d< number > ) {
 			return next || this.size_real().map( v => v / 2 )
 		}
 
