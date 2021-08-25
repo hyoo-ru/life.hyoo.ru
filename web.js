@@ -4991,8 +4991,10 @@ var $;
                 const series_x = this.series_x();
                 const series_y = this.series_y();
                 return this.indexes().map(index => {
-                    const point_x = Math.round(shift_x + series_x[index] * scale_x);
-                    const point_y = Math.round(shift_y + series_y[index] * scale_y);
+                    let point_x = Math.round(shift_x + series_x[index] * scale_x);
+                    let point_y = Math.round(shift_y + series_y[index] * scale_y);
+                    point_x = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_x, Number.MAX_SAFE_INTEGER));
+                    point_y = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_y, Number.MAX_SAFE_INTEGER));
                     return [point_x, point_y];
                 });
             }
@@ -5520,6 +5522,10 @@ var $;
             draw_continue(event) {
                 const drawn = this.drawn();
                 const point = this.draw_point(event);
+                const last_x = drawn.x[drawn.x.length - 1];
+                const last_y = drawn.y[drawn.x.length - 1];
+                if (last_x === point.x && last_x === point.y)
+                    return;
                 this.drawn(new $.$mol_vector_2d([...drawn.x, point.x], [...drawn.y, point.y]));
             }
             draw_end(event) {
