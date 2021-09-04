@@ -5595,6 +5595,10 @@ var $;
             const obj = new this.$.$mol_vector_2d(this.dimensions_x(), this.dimensions_y());
             return obj;
         }
+        dimensions_viewport() {
+            const obj = new this.$.$mol_vector_2d(this.dimensions_viewport_x(), this.dimensions_viewport_y());
+            return obj;
+        }
         sub() {
             return this.graphs_sorted();
         }
@@ -5642,6 +5646,14 @@ var $;
             return obj;
         }
         dimensions_y() {
+            const obj = new this.$.$mol_vector_range(Infinity, -Infinity);
+            return obj;
+        }
+        dimensions_viewport_x() {
+            const obj = new this.$.$mol_vector_range(Infinity, -Infinity);
+            return obj;
+        }
+        dimensions_viewport_y() {
             const obj = new this.$.$mol_vector_range(Infinity, -Infinity);
             return obj;
         }
@@ -5733,6 +5745,9 @@ var $;
     ], $mol_plot_pane.prototype, "dimensions", null);
     __decorate([
         $.$mol_mem
+    ], $mol_plot_pane.prototype, "dimensions_viewport", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_plot_pane.prototype, "gap_x", null);
     __decorate([
         $.$mol_mem
@@ -5755,6 +5770,12 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "dimensions_y", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_plot_pane.prototype, "dimensions_viewport_x", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_plot_pane.prototype, "dimensions_viewport_y", null);
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "zoom", null);
