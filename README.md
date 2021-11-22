@@ -3,6 +3,10 @@
 **M**am owns **A**gnostic **M**odules.
 This is base **MAM** project.
 
+# Articles
+
+- [MAM: сборка фронтенда без боли](https://habhub.hyoo.ru/#!author=nin-jin/repo=HabHub/article=18)
+
 # Features
 
 * **Agnostic modules.** Module is directory with mixed source files (JS, TS, CSS, JSON, HTML, Tree, images etc).
@@ -83,3 +87,4 @@ start http://localhost:9080/mol/
 # MAM based projects
 
 - https://github.com/hyoo-ru?q=hyoo.ru
+

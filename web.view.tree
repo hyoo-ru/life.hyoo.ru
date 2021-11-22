@@ -96,6 +96,7 @@ $mol_speck $mol_view
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
+	minimal_width 40
 	click?event null
 	event_click?event null
 	event *
@@ -201,6 +202,8 @@ $mol_plot_graph $mol_svg_group
 		<= gap_y $mol_vector_range /
 			0
 			0
+	repos_x!val 0
+	repos_y!val 0
 	indexes /number
 	points /readonly(number)[]
 	front /$mol_svg
@@ -222,6 +225,9 @@ $mol_touch $mol_plugin
 	start_zoom?val 0
 	start_distance?val 0
 	zoom?val 1
+	allow_draw true
+	allow_pan true
+	allow_zoom true
 	action_type?val \
 	action_point?val $mol_vector_2d /
 		NaN
@@ -269,7 +275,6 @@ $mol_touch $mol_plugin
 		pointerup?event <=> event_end?event null
 		pointerleave?event <=> event_end?event null
 		wheel?event <=> event_wheel?event null
-		contextmenu?event <=> event_menu?event null
 
 $mol_plot_pane $mol_svg_root
 	aspect \none
@@ -349,10 +354,13 @@ $mol_plot_pane $mol_svg_root
 			zoom?val <=> zoom?val 1
 			pan?val <=> shift?val
 			pointer_center => cursor_position
+			allow_draw <= allow_draw true
+			allow_pan <= allow_pan true
+			allow_zoom <= allow_zoom true
 			action_type => action_type
 			action_point => action_point
 			draw?event <=> draw?event null
-	event *
+	- event *
 		^
 		dblclick?event <=> reset?event null
 

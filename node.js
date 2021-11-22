@@ -412,6 +412,9 @@ var $;
         static hsla(hue, saturation, lightness, alpha) {
             return new $mol_style_func('hsla', [hue, per(saturation), per(lightness), alpha]);
         }
+        static clamp(min, mid, max) {
+            return new $mol_style_func('clamp', [min, mid, max]);
+        }
         static rgba(red, green, blue, alpha) {
             return new $mol_style_func('rgba', [red, green, blue, alpha]);
         }
@@ -1105,7 +1108,7 @@ var $;
     function $mol_dev_format_native(obj) {
         if (typeof obj === 'undefined')
             return $.$mol_dev_format_shade('undefined');
-        if (typeof obj !== 'object')
+        if (typeof obj !== 'object' && typeof obj !== 'function')
             return obj;
         return [
             'object',
@@ -2737,7 +2740,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_round: .25rem;\n}\n");
+    $.$mol_style_attach("mol/gap/gap.css", ":root {\n\t--mol_gap_block: .75rem;\n\t--mol_gap_text: .5rem .75rem;\n\t--mol_gap_round: .25rem;\n\t--mol_gap_space: .35rem;\n\t--mol_gap_blur: .5rem;\n}\n");
 })($ || ($ = {}));
 //gap.css.js.map
 ;
@@ -2749,6 +2752,8 @@ var $;
         block: vary('--mol_gap_block'),
         text: vary('--mol_gap_text'),
         round: vary('--mol_gap_round'),
+        space: vary('--mol_gap_space'),
+        blur: vary('--mol_gap_blur'),
     };
 })($ || ($ = {}));
 //gap.js.map
@@ -3756,6 +3761,9 @@ var $;
         static href(next) {
             return next || process.argv.slice(2).join(' ');
         }
+        static href_normal() {
+            return this.link({});
+        }
         static dict(next) {
             if (next !== void 0)
                 this.href(this.make_link(next));
@@ -3818,6 +3826,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_state_arg, "href", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_state_arg, "href_normal", null);
     __decorate([
         $.$mol_mem
     ], $mol_state_arg, "dict", null);
@@ -3965,6 +3976,7 @@ var $;
         boxSizing: 'border-box',
         position: 'relative',
         minWidth: rem(2.5),
+        gap: $.$mol_gap.space,
         border: {
             radius: $.$mol_gap.round,
         },
@@ -4018,7 +4030,7 @@ var $;
                 return new URL(this.uri(), base);
             }
             current() {
-                const base = this.$.$mol_state_arg.href();
+                const base = this.$.$mol_state_arg.href_normal();
                 const target = this.uri_native().toString();
                 if (base === target)
                     return true;
@@ -4334,6 +4346,9 @@ var $;
         minimal_height() {
             return 40;
         }
+        minimal_width() {
+            return 40;
+        }
         click(event) {
             if (event !== undefined)
                 return event;
@@ -4523,7 +4538,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tmin-width: 2.5rem;\n\tborder-radius: var(--mol_gap_round);\n}\n[mol_button]:focus {\n\toutline: none;\n}\n");
+    $.$mol_style_attach("mol/button/button.view.css", "[mol_button] {\n\tborder: none;\n\tfont: inherit;\n\tdisplay: inline-flex;\n\tgap: var(--mol_gap_space);\n\tflex-shrink: 0;\n\ttext-decoration: inherit;\n\tcursor: inherit;\n\tposition: relative;\n\tbox-sizing: border-box;\n\tword-break: normal;\n\tcursor: default;\n\tuser-select: none;\n\tborder-radius: var(--mol_gap_round);\n}\n[mol_button]:focus {\n\toutline: none;\n}\n");
 })($ || ($ = {}));
 //button.view.css.js.map
 ;
@@ -4599,7 +4614,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\tdisplay: inline-block;\n\talign-content: center;\n\talign-items: center;\n\tvertical-align: middle;\n\ttext-align: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_button_typed][disabled] {\n\tcolor: var(--mol_theme_text);\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus {\n\tcursor: pointer;\n\tbackground-color: var(--mol_theme_hover);\n}\n");
+    $.$mol_style_attach("mol/button/typed/typed.view.css", "[mol_button_typed] {\n\talign-content: center;\n\talign-items: center;\n\tpadding: var(--mol_gap_text);\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_button_typed][disabled] {\n\tcolor: var(--mol_theme_text);\n\tpointer-events: none;\n}\n\n[mol_button_typed]:hover ,\n[mol_button_typed]:focus {\n\tcursor: pointer;\n\tbackground-color: var(--mol_theme_hover);\n}\n");
 })($ || ($ = {}));
 //typed.view.css.js.map
 ;
@@ -4885,6 +4900,9 @@ var $;
             }
             return distance;
         }
+        transponed() {
+            return this[0].map((_, i) => this.map(row => row[i]));
+        }
         get x() { return this[0]; }
         get y() { return this[1]; }
         get z() { return this[2]; }
@@ -5017,6 +5035,12 @@ var $;
         gap() {
             const obj = new this.$.$mol_vector_2d(this.gap_x(), this.gap_y());
             return obj;
+        }
+        repos_x(val) {
+            return 0;
+        }
+        repos_y(val) {
+            return 0;
         }
         indexes() {
             return [];
@@ -5176,14 +5200,20 @@ var $;
             indexes() {
                 return this.series_x().map((_, i) => i);
             }
+            repos_x(val) {
+                return val;
+            }
+            repos_y(val) {
+                return val;
+            }
             points() {
                 const [shift_x, shift_y] = this.shift();
                 const [scale_x, scale_y] = this.scale();
                 const series_x = this.series_x();
                 const series_y = this.series_y();
                 return this.indexes().map(index => {
-                    let point_x = Math.round(shift_x + series_x[index] * scale_x);
-                    let point_y = Math.round(shift_y + series_y[index] * scale_y);
+                    let point_x = Math.round(shift_x + this.repos_x(series_x[index]) * scale_x);
+                    let point_y = Math.round(shift_y + this.repos_y(series_y[index]) * scale_y);
                     point_x = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_x, Number.MAX_SAFE_INTEGER));
                     point_y = Math.max(Number.MIN_SAFE_INTEGER, Math.min(point_y, Number.MAX_SAFE_INTEGER));
                     return [point_x, point_y];
@@ -5197,7 +5227,7 @@ var $;
                 const series_x = this.series_x();
                 const series_y = this.series_y();
                 for (let i = 0; i < series_x.length; i++) {
-                    next = next.expanded1([series_x[i], series_y[i]]);
+                    next = next.expanded1([this.repos_x(series_x[i]), this.repos_y(series_y[i])]);
                 }
                 return next;
             }
@@ -5241,6 +5271,15 @@ var $;
             if (val !== undefined)
                 return val;
             return 1;
+        }
+        allow_draw() {
+            return true;
+        }
+        allow_pan() {
+            return true;
+        }
+        allow_zoom() {
+            return true;
         }
         action_type(val) {
             if (val !== undefined)
@@ -5358,8 +5397,7 @@ var $;
                 pointermove: (event) => this.event_move(event),
                 pointerup: (event) => this.event_end(event),
                 pointerleave: (event) => this.event_end(event),
-                wheel: (event) => this.event_wheel(event),
-                contextmenu: (event) => this.event_menu(event)
+                wheel: (event) => this.event_wheel(event)
             };
         }
         event_start(event) {
@@ -5378,11 +5416,6 @@ var $;
             return null;
         }
         event_wheel(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        event_menu(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -5466,9 +5499,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_wheel", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_touch.prototype, "event_menu", null);
     $.$mol_touch = $mol_touch;
 })($ || ($ = {}));
 //touch.view.tree.js.map
@@ -5515,16 +5545,22 @@ var $;
                     if (event.type !== 'pointerleave')
                         events.push(event);
                     this.pointer_events(events);
-                    if (events.filter(e => e.pointerType === 'touch').length === 2) {
+                    if (this.allow_zoom() && events.filter(e => e.pointerType === 'touch').length === 2) {
                         return this.action_type('zoom');
                     }
+                    let button;
+                    (function (button) {
+                        button[button["left"] = 1] = "left";
+                        button[button["right"] = 2] = "right";
+                        button[button["middle"] = 4] = "middle";
+                    })(button || (button = {}));
                     if (events.length > 0) {
-                        if (event.ctrlKey)
+                        if (event.ctrlKey && this.allow_zoom())
                             return this.action_type('zoom');
-                        if (event.buttons === 2)
-                            return this.action_type('pan');
-                        if (event.buttons === 1)
+                        if (event.buttons === button.left && this.allow_draw())
                             return this.action_type('draw');
+                        if (event.buttons && this.allow_pan())
+                            return this.action_type('pan');
                     }
                     return this.action_type('');
                 }
@@ -5568,11 +5604,7 @@ var $;
                 if (!start_pos)
                     return;
                 if (action_type === 'pan') {
-                    const distance = new $.$mol_vector(start_pos, pos).distance();
-                    if (distance >= 4) {
-                        this._menu_mute = true;
-                        this.dom_node().setPointerCapture(event.pointerId);
-                    }
+                    this.dom_node().setPointerCapture(event.pointerId);
                     this.pan(new $.$mol_vector_2d(start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]));
                 }
                 const precision = this.swipe_precision();
@@ -5624,7 +5656,6 @@ var $;
                     return;
                 }
                 this.start_pos(null);
-                new $.$mol_after_timeout(0, () => this._menu_mute = false);
             }
             swipe_left(event) {
                 if (this.view_rect().right - this.start_pos()[0] < this.swipe_precision() * 2)
@@ -5654,11 +5685,6 @@ var $;
                     this.swipe_to_bottom(event);
                 this.event_end(event);
             }
-            _menu_mute = false;
-            event_menu(event) {
-                if (this._menu_mute)
-                    event.preventDefault();
-            }
             event_wheel(event) {
                 if (this.pan === $mol_touch.prototype.pan && this.zoom === $mol_touch.prototype.zoom)
                     return;
@@ -5668,7 +5694,7 @@ var $;
                 const action_type = this.event_eat(event);
                 if (action_type === 'zoom') {
                     const zoom_prev = this.zoom() || 0.001;
-                    const zoom_next = zoom_prev * (1 - .1 * Math.sign(event.deltaY));
+                    const zoom_next = zoom_prev * (1 - .001 * event.deltaY);
                     const mult = zoom_next / zoom_prev;
                     this.zoom(zoom_next);
                     const pan_prev = this.pan();
@@ -5805,12 +5831,6 @@ var $;
                 this.Touch()
             ];
         }
-        event() {
-            return {
-                ...super.event(),
-                dblclick: (event) => this.reset(event)
-            };
-        }
         gap_x() {
             const obj = new this.$.$mol_vector_range(this.gap_left(), this.gap_right());
             return obj;
@@ -5868,6 +5888,15 @@ var $;
                 return val;
             return 1;
         }
+        allow_draw() {
+            return true;
+        }
+        allow_pan() {
+            return true;
+        }
+        allow_zoom() {
+            return true;
+        }
         draw(event) {
             if (event !== undefined)
                 return event;
@@ -5886,13 +5915,11 @@ var $;
             const obj = new this.$.$mol_touch();
             obj.zoom = (val) => this.zoom(val);
             obj.pan = (val) => this.shift(val);
+            obj.allow_draw = () => this.allow_draw();
+            obj.allow_pan = () => this.allow_pan();
+            obj.allow_zoom = () => this.allow_zoom();
             obj.draw = (event) => this.draw(event);
             return obj;
-        }
-        reset(event) {
-            if (event !== undefined)
-                return event;
-            return null;
         }
     }
     __decorate([
@@ -5979,9 +6006,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "Touch", null);
-    __decorate([
-        $.$mol_mem
-    ], $mol_plot_pane.prototype, "reset", null);
     $.$mol_plot_pane = $mol_plot_pane;
 })($ || ($ = {}));
 //pane.view.tree.js.map
@@ -6296,8 +6320,8 @@ var $;
                 do {
                     indexes = [];
                     for (let i = 0; i < series_x.length; i++) {
-                        const point_x = series_x[i];
-                        const point_y = series_y[i];
+                        const point_x = this.repos_x(series_x[i]);
+                        const point_y = this.repos_y(series_y[i]);
                         const scaled_x = Math.round(shift_x + point_x * scale_x);
                         const scaled_y = Math.round(shift_y + point_y * scale_y);
                         if (Math.abs(scaled_x - last_x) < radius
