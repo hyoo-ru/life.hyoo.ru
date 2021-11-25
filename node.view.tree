@@ -261,7 +261,9 @@ $mol_touch $mol_plugin
 	swipe_to_left?val null
 	swipe_to_top?val null
 	-
+	draw_start?event null
 	draw?event null
+	draw_end?event null
 	-
 	style *
 		^
@@ -273,7 +275,7 @@ $mol_touch $mol_plugin
 		pointerdown?event <=> event_start?event null
 		pointermove?event <=> event_move?event null
 		pointerup?event <=> event_end?event null
-		pointerleave?event <=> event_end?event null
+		pointerleave?event <=> event_leave?event null
 		wheel?event <=> event_wheel?event null
 
 $mol_plot_pane $mol_svg_root
@@ -359,7 +361,9 @@ $mol_plot_pane $mol_svg_root
 			allow_zoom <= allow_zoom true
 			action_type => action_type
 			action_point => action_point
+			draw_start?event <=> draw_start?event null
 			draw?event <=> draw?event null
+			draw_end?event <=> draw_end?event null
 	- event *
 		^
 		dblclick?event <=> reset?event null
@@ -382,14 +386,10 @@ $hyoo_life_map $mol_plot_pane
 	gap_hor 0
 	gap_vert 0
 	-
-	pan?val $mol_vector_2d /
-		0
-		0
 	zoom?val 16
 	scale $mol_vector_2d /
 		<= zoom
 		<= zoom
-	shift <= pan
 	-
 	graphs /
 		<= Points $mol_plot_dot
@@ -397,11 +397,6 @@ $hyoo_life_map $mol_plot_pane
 			series_x <= points_x /number
 			series_y <= points_y /number
 	-
-	plugins /
-		^
-		<= Touch $mol_touch
-			zoom?val <=> zoom?val
-			pan?val <=> pan?val
 	-
 	snapshot \
 	snapshot_current \
@@ -409,10 +404,6 @@ $hyoo_life_map $mol_plot_pane
 	speed 0
 	population 0
 	-
-	event *
-		^
-		mousedown?event <=> draw_start?event null
-		mouseup?event <=> draw_end?event null
 
 $hyoo_life $mol_page
 	title @ \Life of {population} cells

@@ -5411,7 +5411,17 @@ var $;
                 return val;
             return null;
         }
+        draw_start(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
         draw(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        draw_end(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -5429,7 +5439,7 @@ var $;
                 pointerdown: (event) => this.event_start(event),
                 pointermove: (event) => this.event_move(event),
                 pointerup: (event) => this.event_end(event),
-                pointerleave: (event) => this.event_end(event),
+                pointerleave: (event) => this.event_leave(event),
                 wheel: (event) => this.event_wheel(event)
             };
         }
@@ -5444,6 +5454,11 @@ var $;
             return null;
         }
         event_end(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        event_leave(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -5519,7 +5534,13 @@ var $;
     ], $mol_touch.prototype, "swipe_to_top", null);
     __decorate([
         $.$mol_mem
+    ], $mol_touch.prototype, "draw_start", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_touch.prototype, "draw", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_touch.prototype, "draw_end", null);
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_start", null);
@@ -5529,6 +5550,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_end", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_touch.prototype, "event_leave", null);
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "event_wheel", null);
@@ -5575,10 +5599,14 @@ var $;
             event_eat(event) {
                 if (event instanceof PointerEvent) {
                     const events = this.pointer_events().filter(e => e.pointerId !== event.pointerId);
-                    if (event.type !== 'pointerleave')
+                    if (event.type !== 'pointerup' && event.type !== 'pointerleave')
                         events.push(event);
                     this.pointer_events(events);
-                    if (this.allow_zoom() && events.filter(e => e.pointerType === 'touch').length === 2) {
+                    const touch_count = events.filter(e => e.pointerType === 'touch').length;
+                    if (this.allow_zoom() && touch_count === 2) {
+                        return this.action_type('zoom');
+                    }
+                    if (this.action_type() === 'zoom' && touch_count === 1) {
                         return this.action_type('zoom');
                     }
                     let button;
@@ -5611,10 +5639,12 @@ var $;
                 const action_type = this.event_eat(event);
                 if (!action_type)
                     return;
-                if (action_type === 'draw')
-                    return;
                 const coords = this.pointer_coords();
                 this.start_pos(coords.center());
+                if (action_type === 'draw') {
+                    this.draw_start(event);
+                    return;
+                }
                 this.start_distance(coords.distance());
                 this.start_zoom(this.zoom());
             }
@@ -5626,14 +5656,17 @@ var $;
                     return;
                 const start_pan = this.start_pan();
                 const action_type = this.event_eat(event);
+                const start_pos = this.start_pos();
                 let pos = this.pointer_center();
                 if (!action_type)
                     return;
                 if (action_type === 'draw') {
-                    this.draw(event);
+                    const distance = new $.$mol_vector(start_pos, pos).distance();
+                    if (distance >= 4) {
+                        this.draw(event);
+                    }
                     return;
                 }
-                const start_pos = this.start_pos();
                 if (!start_pos)
                     return;
                 if (action_type === 'pan') {
@@ -5682,12 +5715,15 @@ var $;
                 }
             }
             event_end(event) {
+                const action = this.action_type();
+                if (action === 'draw') {
+                    this.draw_end(event);
+                }
+                this.event_leave(event);
+            }
+            event_leave(event) {
                 this.event_eat(event);
                 this.dom_node().releasePointerCapture(event.pointerId);
-                if (!this.start_pos()) {
-                    this.draw(event);
-                    return;
-                }
                 this.start_pos(null);
             }
             swipe_left(event) {
@@ -5930,7 +5966,17 @@ var $;
         allow_zoom() {
             return true;
         }
+        draw_start(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
         draw(event) {
+            if (event !== undefined)
+                return event;
+            return null;
+        }
+        draw_end(event) {
             if (event !== undefined)
                 return event;
             return null;
@@ -5951,7 +5997,9 @@ var $;
             obj.allow_draw = () => this.allow_draw();
             obj.allow_pan = () => this.allow_pan();
             obj.allow_zoom = () => this.allow_zoom();
+            obj.draw_start = (event) => this.draw_start(event);
             obj.draw = (event) => this.draw(event);
+            obj.draw_end = (event) => this.draw_end(event);
             return obj;
         }
     }
@@ -6035,7 +6083,13 @@ var $;
     ], $mol_plot_pane.prototype, "zoom", null);
     __decorate([
         $.$mol_mem
+    ], $mol_plot_pane.prototype, "draw_start", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_plot_pane.prototype, "draw", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_plot_pane.prototype, "draw_end", null);
     __decorate([
         $.$mol_mem
     ], $mol_plot_pane.prototype, "Touch", null);
@@ -6419,12 +6473,6 @@ var $;
         gap_vert() {
             return 0;
         }
-        pan(val) {
-            if (val !== undefined)
-                return val;
-            const obj = new this.$.$mol_vector_2d(0, 0);
-            return obj;
-        }
         zoom(val) {
             if (val !== undefined)
                 return val;
@@ -6434,18 +6482,9 @@ var $;
             const obj = new this.$.$mol_vector_2d(this.zoom(), this.zoom());
             return obj;
         }
-        shift() {
-            return this.pan();
-        }
         graphs() {
             return [
                 this.Points()
-            ];
-        }
-        plugins() {
-            return [
-                ...super.plugins(),
-                this.Touch()
             ];
         }
         snapshot() {
@@ -6460,13 +6499,6 @@ var $;
         population() {
             return 0;
         }
-        event() {
-            return {
-                ...super.event(),
-                mousedown: (event) => this.draw_start(event),
-                mouseup: (event) => this.draw_end(event)
-            };
-        }
         points_x() {
             return [];
         }
@@ -6480,26 +6512,7 @@ var $;
             obj.series_y = () => this.points_y();
             return obj;
         }
-        Touch() {
-            const obj = new this.$.$mol_touch();
-            obj.zoom = (val) => this.zoom(val);
-            obj.pan = (val) => this.pan(val);
-            return obj;
-        }
-        draw_start(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
-        draw_end(event) {
-            if (event !== undefined)
-                return event;
-            return null;
-        }
     }
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_life_map.prototype, "pan", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_life_map.prototype, "zoom", null);
@@ -6509,15 +6522,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $hyoo_life_map.prototype, "Points", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_life_map.prototype, "Touch", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_life_map.prototype, "draw_start", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_life_map.prototype, "draw_end", null);
     $.$hyoo_life_map = $hyoo_life_map;
 })($ || ($ = {}));
 //map.view.tree.js.map
@@ -6587,34 +6591,32 @@ var $;
             points_y() {
                 return [...this.state().keys()].map(key => $.$mol_coord_low(key));
             }
-            draw_start_pos(next) {
-                return next ?? null;
+            draw_start_state(next = true) {
+                return next;
+            }
+            action_cell() {
+                const point = this.action_point();
+                return $.$mol_coord_pack(Math.round(point.x), Math.round(point.y));
             }
             draw_start(event) {
-                this.draw_start_pos([event.pageX, event.pageY]);
+                this.draw_start_state(!this.state().has(this.action_cell()));
+            }
+            draw(event) {
+                const cell = this.action_cell();
+                const state = new Set(this.state());
+                if (this.draw_start_state())
+                    state.add(cell);
+                else
+                    state.delete(cell);
+                this.state(state);
             }
             draw_end(event) {
-                const start_pos = this.draw_start_pos();
-                const pos = [event.pageX, event.pageY];
-                if (Math.abs(start_pos[0] - pos[0]) > 4)
-                    return;
-                if (Math.abs(start_pos[1] - pos[1]) > 4)
-                    return;
-                const zoom = this.zoom();
-                const pan = this.pan();
-                const rect = this.dom_node().getBoundingClientRect();
-                const cell = $.$mol_coord_pack(Math.round((event.pageX - rect.left - pan[0]) / zoom), Math.round((event.pageY - rect.top - pan[1]) / zoom));
-                const state = new Set(this.state());
-                if (state.has(cell))
-                    state.delete(cell);
-                else
-                    state.add(cell);
-                this.state(state);
+                this.draw(event);
             }
             zoom(next = super.zoom()) {
                 return Math.max(1, next);
             }
-            pan(next) {
+            shift(next) {
                 return next || this.size_real().map(v => v / 2);
             }
             dom_tree() {
@@ -6645,13 +6647,16 @@ var $;
         ], $hyoo_life_map.prototype, "points_y", null);
         __decorate([
             $.$mol_mem
-        ], $hyoo_life_map.prototype, "draw_start_pos", null);
+        ], $hyoo_life_map.prototype, "draw_start_state", null);
+        __decorate([
+            $.$mol_mem
+        ], $hyoo_life_map.prototype, "action_cell", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_life_map.prototype, "zoom", null);
         __decorate([
             $.$mol_mem
-        ], $hyoo_life_map.prototype, "pan", null);
+        ], $hyoo_life_map.prototype, "shift", null);
         $$.$hyoo_life_map = $hyoo_life_map;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

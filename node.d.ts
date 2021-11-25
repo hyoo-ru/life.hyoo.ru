@@ -1579,7 +1579,9 @@ declare namespace $ {
         swipe_to_bottom(val?: any): any;
         swipe_to_left(val?: any): any;
         swipe_to_top(val?: any): any;
+        draw_start(event?: any): any;
         draw(event?: any): any;
+        draw_end(event?: any): any;
         style(): {
             "touch-action": string;
             "overscroll-behavior": string;
@@ -1594,6 +1596,7 @@ declare namespace $ {
         event_start(event?: any): any;
         event_move(event?: any): any;
         event_end(event?: any): any;
+        event_leave(event?: any): any;
         event_wheel(event?: any): any;
     }
 }
@@ -1610,6 +1613,7 @@ declare namespace $.$$ {
         event_start(event: PointerEvent): void;
         event_move(event: PointerEvent): void;
         event_end(event: PointerEvent): void;
+        event_leave(event: PointerEvent): void;
         swipe_left(event: PointerEvent): void;
         swipe_right(event: PointerEvent): void;
         swipe_top(event: PointerEvent): void;
@@ -1663,7 +1667,9 @@ declare namespace $ {
         allow_draw(): boolean;
         allow_pan(): boolean;
         allow_zoom(): boolean;
+        draw_start(event?: any): any;
         draw(event?: any): any;
+        draw_end(event?: any): any;
         cursor_position(): $mol_vector_2d<number>;
         action_type(): string;
         action_point(): $mol_vector_2d<number>;
@@ -1737,26 +1743,16 @@ declare namespace $ {
     class $hyoo_life_map extends $mol_plot_pane {
         gap_hor(): number;
         gap_vert(): number;
-        pan(val?: any): $mol_vector_2d<number>;
         zoom(val?: any): number;
         scale(): $mol_vector_2d<number>;
-        shift(): $mol_vector_2d<number>;
         graphs(): readonly any[];
-        plugins(): readonly any[];
         snapshot(): string;
         snapshot_current(): string;
         speed(): number;
         population(): number;
-        event(): {
-            mousedown: (event?: any) => any;
-            mouseup: (event?: any) => any;
-        };
         points_x(): readonly number[];
         points_y(): readonly number[];
         Points(): $$.$mol_plot_dot;
-        Touch(): $$.$mol_touch;
-        draw_start(event?: any): any;
-        draw_end(event?: any): any;
     }
 }
 
@@ -1772,11 +1768,13 @@ declare namespace $.$$ {
         population(): number;
         points_x(): number[];
         points_y(): number[];
-        draw_start_pos(next?: number[] | null): number[] | null;
-        draw_start(event: MouseEvent): void;
-        draw_end(event: MouseEvent): void;
+        draw_start_state(next?: boolean): boolean;
+        action_cell(): number;
+        draw_start(event: Event): void;
+        draw(event: Event): void;
+        draw_end(event: Event): void;
         zoom(next?: number): number;
-        pan(next?: $mol_vector_2d<number>): $mol_vector<number, 2>;
+        shift(next?: $mol_vector_2d<number>): $mol_vector<number, 2>;
         dom_tree(): Element;
     }
 }
