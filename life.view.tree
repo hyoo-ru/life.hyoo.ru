@@ -3,6 +3,7 @@ $hyoo_life $mol_page
 	plugins /
 		<= Theme $mol_theme_auto
 	tools /
+		<= Lights $mol_lights_toggle
 		<= Source_link $mol_link_source
 			uri \https://github.com/hyoo-ru/life.hyoo.ru
 		<= Store_link $mol_link
