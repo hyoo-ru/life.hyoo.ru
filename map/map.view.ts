@@ -75,37 +75,38 @@ namespace $.$$ {
 		points_y() {
 			return [ ... this.state().keys() ].map(key => $mol_coord_low( key ))
 		}
-
+		
 		@ $mol_mem
-		draw_start_pos( next? : number[] | null ) {
-			return next ?? null
+		draw_start_state( next = true ) {
+			return next
 		}
-
-		draw_start( event : MouseEvent ) {
-			this.draw_start_pos([ event.pageX , event.pageY ])
-		}
-
-		draw_end( event : MouseEvent ) {
-			const start_pos = this.draw_start_pos()!
-			const pos = [ event.pageX , event.pageY ]
-			
-			if( Math.abs( start_pos[0] - pos[0] ) > 4 ) return
-			if( Math.abs( start_pos[1] - pos[1] ) > 4 ) return
-			
-			const zoom = this.zoom()
-			const pan = this.pan()
-			const rect = this.dom_node().getBoundingClientRect()
-			
-			const cell = $mol_coord_pack(
-				Math.round( ( event.pageX - rect.left - pan[0] ) / zoom ) ,
-				Math.round( ( event.pageY - rect.top - pan[1] ) / zoom ) ,
+		
+		@ $mol_mem
+		action_cell() {
+			const point = this.action_point()
+			return $mol_coord_pack(
+				Math.round( point.x ) ,
+				Math.round( point.y ) ,
 			)
+		}
+		
+		draw_start( event: Event ) {
+			this.draw_start_state( !this.state().has( this.action_cell() ) )
+		}
+
+		draw( event: Event ) {
 			
+			const cell = this.action_cell()
 			const state = new Set( this.state() )
-			if( state.has( cell ) ) state.delete( cell )
-			else state.add( cell )
+			
+			if( this.draw_start_state() ) state.add( cell )
+			else state.delete( cell )
 			
 			this.state( state )
+		}
+
+		draw_end( event: Event ) {
+			this.draw( event )
 		}
 
 		@ $mol_mem
@@ -114,7 +115,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		pan( next? : $mol_vector_2d< number > ) {
+		shift( next? : $mol_vector_2d< number > ) {
 			return next || this.size_real().map( v => v / 2 )
 		}
 
