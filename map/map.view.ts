@@ -24,7 +24,7 @@ namespace $.$$ {
 			return new this.$.$mol_after_timeout( 1000 / this.speed() || 0 , this.step.bind( this ) )
 		}
 
-		@ $mol_fiber_solid.method
+		@ $mol_action
 		step() {
 			
 			let prev = this.state()
