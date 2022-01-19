@@ -6322,46 +6322,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_fiber_defer(calculate) {
-        const host = {};
-        const fiber = new $mol_wire_fiber(host, calculate, calculate.name);
-        fiber.plan();
-        return fiber;
-    }
-    $.$mol_fiber_defer = $mol_fiber_defer;
-    function $mol_fiber_root(calculate) {
-        const wrapper = function (...args) {
-            const fiber = new $mol_wire_fiber(this, calculate, this + '.' + calculate.name, ...args);
-            return fiber.sync();
-        };
-        wrapper[Symbol.toStringTag] = calculate.name;
-        return wrapper;
-    }
-    $.$mol_fiber_root = $mol_fiber_root;
-    function $mol_fiber_sync(request) {
-        throw new Error('Use $mol_wire_sync instead');
-    }
-    $.$mol_fiber_sync = $mol_fiber_sync;
-    async function $mol_fiber_warp() {
-        $mol_wire_fiber.sync();
-    }
-    $.$mol_fiber_warp = $mol_fiber_warp;
-    class $mol_fiber_solid extends $mol_wrapper {
-        static func(task) {
-            return task;
-        }
-    }
-    $.$mol_fiber_solid = $mol_fiber_solid;
-    class $mol_fiber {
-        static method = $mol_action;
-    }
-    $.$mol_fiber = $mol_fiber;
-})($ || ($ = {}));
-//mol/fiber/fiber.ts
-;
-"use strict";
-var $;
-(function ($) {
     $mol_style_attach("hyoo/life/map/map.view.css", "[hyoo_life_map] {\n\tposition: relative;\n}\n");
 })($ || ($ = {}));
 //hyoo/life/map/-css/map.view.css.ts
@@ -6467,7 +6427,7 @@ var $;
             $mol_mem
         ], $hyoo_life_map.prototype, "cycle", null);
         __decorate([
-            $mol_fiber_solid.method
+            $mol_action
         ], $hyoo_life_map.prototype, "step", null);
         __decorate([
             $mol_mem
