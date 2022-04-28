@@ -142,17 +142,20 @@ $mol_link_source $mol_link
 
 $mol_icon_stored $mol_icon path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
 
-$mol_switch $mol_view
+$mol_check_list $mol_view
 	Option!id $mol_check
 		checked?val <=> option_checked!id?val false
-		label <= option_label!id / <= option_title!id \
+		label <= option_label!id /
+			<= option_title!id \
 		enabled <= option_enabled!id <= enabled true
 		hint <= option_hint!id \
 		minimal_height 24
-	value?val null
 	options *
 	keys /string
 	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value?val \
 
 $mol_svg_group $mol_svg
 	dom_name \g
