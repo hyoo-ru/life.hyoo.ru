@@ -143,12 +143,12 @@ $mol_link_source $mol_link
 $mol_icon_stored $mol_icon path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
 
 $mol_check_list $mol_view
-	Option!id $mol_check
-		checked?val <=> option_checked!id?val false
-		label <= option_label!id /
-			<= option_title!id \
-		enabled <= option_enabled!id <= enabled true
-		hint <= option_hint!id \
+	Option* $mol_check
+		checked?val <=> option_checked*?val false
+		label <= option_label* /
+			<= option_title* \
+		enabled <= option_enabled* <= enabled true
+		hint <= option_hint* \
 		minimal_height 24
 	options *
 	keys /string
@@ -217,8 +217,8 @@ $mol_plot_graph $mol_svg_group
 		<= gap_y $mol_vector_range /
 			0
 			0
-	repos_x!val 0
-	repos_y!val 0
+	repos_x* 0
+	repos_y* 0
 	indexes /number
 	points /readonly(number)[]
 	front /$mol_svg
