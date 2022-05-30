@@ -76,10 +76,7 @@ namespace $.$$ {
 			return [ ... this.state().keys() ].map(key => $mol_coord_low( key ))
 		}
 		
-		@ $mol_mem
-		draw_start_state( next = true ) {
-			return next
-		}
+		_draw_start_state = true
 		
 		@ $mol_mem
 		action_cell() {
@@ -91,7 +88,7 @@ namespace $.$$ {
 		}
 		
 		draw_start( event: Event ) {
-			this.draw_start_state( !this.state().has( this.action_cell() ) )
+			this._draw_start_state = !this.state().has( this.action_cell() )
 		}
 
 		draw( event: Event ) {
@@ -99,7 +96,7 @@ namespace $.$$ {
 			const cell = this.action_cell()
 			const state = new Set( this.state() )
 			
-			if( this.draw_start_state() ) state.add( cell )
+			if( this._draw_start_state ) state.add( cell )
 			else state.delete( cell )
 			
 			this.state( state )
