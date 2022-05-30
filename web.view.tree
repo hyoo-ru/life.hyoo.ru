@@ -142,6 +142,15 @@ $mol_link_source $mol_link
 
 $mol_icon_stored $mol_icon path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
 
+$mol_link_lazy $mol_link
+	uri?val \
+	uri_generated \
+	current false
+	event *
+		^
+		mousedown?event <=> generate?event null
+
+
 $mol_check_list $mol_view
 	Option* $mol_check
 		checked?val <=> option_checked*?val false
@@ -428,8 +437,8 @@ $hyoo_life $mol_page
 		<= Lights $mol_lights_toggle
 		<= Source_link $mol_link_source
 			uri \https://github.com/hyoo-ru/life.hyoo.ru
-		<= Store_link $mol_link
-			uri <= store_link?val \
+		<= Store_link $mol_link_lazy
+			uri_generated <= store_link?val \
 			hint <= store_link_hint @ \Store snapshot
 			sub /
 				<= Stored $mol_icon_stored
@@ -445,6 +454,6 @@ $hyoo_life $mol_page
 		<= Head
 		<= Map $hyoo_life_map
 			speed <= speed
-			snapshot <= snapshot \0~-2ffff~10002~-20000~-1fffe~3~10003~20003
+			snapshot <= snapshot \3~8003~8002~10003~0~3fff0000~3ffe8001~3fff0002
 			snapshot_current => snapshot_current
 			population => population

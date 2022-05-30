@@ -1422,6 +1422,25 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_link_lazy extends $mol_link {
+        uri(val?: any): string;
+        uri_generated(): string;
+        current(): boolean;
+        event(): {
+            mousedown: (event?: any) => any;
+            click: (event?: any) => any;
+        };
+        generate(event?: any): any;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_link_lazy extends $.$mol_link_lazy {
+        generate(event?: Event): void;
+    }
+}
+
+declare namespace $ {
     class $mol_check_list extends $mol_view {
         Option(id: any): $$.$mol_check;
         options(): {};
@@ -1510,8 +1529,11 @@ declare namespace $ {
         distance(this: $mol_vector<$mol_vector<number, number>, Length>): number;
         transponed(this: $mol_vector<$mol_vector<number, number>, Length>): $mol_vector<$mol_vector<number, Length>, typeof this[0]['length']>;
         get x(): Value;
+        set x(next: Value);
         get y(): Value;
+        set y(next: Value);
         get z(): Value;
+        set z(next: Value);
     }
     class $mol_vector_1d<Value> extends $mol_vector<Value, 1> {
     }
@@ -1520,10 +1542,13 @@ declare namespace $ {
     class $mol_vector_3d<Value> extends $mol_vector<Value, 3> {
     }
     class $mol_vector_range<Value> extends $mol_vector<Value, 2> {
-        get [0](): Value;
-        get [1](): Value;
+        0: Value;
+        1: Value;
+        constructor(min: Value, max: Value);
         get min(): Value;
+        set min(next: Value);
         get max(): Value;
+        set max(next: Value);
         get inversed(): $mol_vector_range<Value>;
         expanded0(value: Value): $mol_vector_range<Value>;
     }
@@ -1797,9 +1822,9 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_coord_pack(a: number, b: number): number;
-    function $mol_coord_high(key: number): number;
-    function $mol_coord_low(key: number): number;
+    function $mol_coord_pack(high: number, low: number): number;
+    function $mol_coord_high(pack: number): number;
+    function $mol_coord_low(pack: number): number;
 }
 
 declare namespace $ {
@@ -1846,7 +1871,7 @@ declare namespace $.$$ {
         population(): number;
         points_x(): number[];
         points_y(): number[];
-        draw_start_state(next?: boolean): boolean;
+        _draw_start_state: boolean;
         action_cell(): number;
         draw_start(event: Event): void;
         draw(event: Event): void;
@@ -1869,7 +1894,7 @@ declare namespace $ {
         store_link(val?: any): string;
         store_link_hint(): string;
         Stored(): $mol_icon_stored;
-        Store_link(): $$.$mol_link;
+        Store_link(): $$.$mol_link_lazy;
         speed(val?: any): number;
         time_slowest_label(): string;
         time_slow_label(): string;
