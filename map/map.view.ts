@@ -6,12 +6,12 @@ namespace $.$$ {
 		state( next? : Set<number> ) {
 			const snapshot = this.snapshot()
 			if( next ) return next
-			return new Set( snapshot.split( '~' ).map( v => parseInt( v , 16 ) ) )
+			return new Set( snapshot.split( '~' ).filter( Boolean ).map( v => parseInt( v , 36 ) ) )
 		}
 
 		@ $mol_mem
 		snapshot_current() {
-			return [ ... this.state() ].map( key => key.toString( 16 ) ).join( '~' )
+			return [ ... this.state() ].map( key => key.toString( 36 ) ).join( '~' )
 		}
 
 		@ $mol_mem

@@ -23,6 +23,6 @@ $hyoo_life $mol_page
 		<= Head
 		<= Map $hyoo_life_map
 			speed <= speed
-			snapshot <= snapshot \3~8003~8002~10003~0~3fff0000~3ffe8001~3fff0002
+			snapshot <= snapshot \3~pab~paa~1ekj~0~hr8lxc~hr7wn5~hr8lxe
 			snapshot_current => snapshot_current
 			population => population
