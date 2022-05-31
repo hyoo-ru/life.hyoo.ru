@@ -1749,26 +1749,7 @@ var $;
             }
         }
         resync(...args) {
-            let res;
-            try {
-                res = this.recall(...args);
-            }
-            catch (error) {
-                if (error instanceof Promise)
-                    $mol_fail_hidden(error);
-                res = error;
-            }
-            try {
-                this.once();
-            }
-            catch (error) {
-                if (error instanceof Promise)
-                    $mol_fail_hidden(error);
-            }
-            return this.put(res);
-        }
-        recall(...args) {
-            return this.task.call(this.host, ...args);
+            return this.put(this.task.call(this.host, ...args));
         }
         once() {
             return this.sync();
@@ -1817,9 +1798,6 @@ var $;
     __decorate([
         $mol_wire_method
     ], $mol_wire_atom.prototype, "resync", null);
-    __decorate([
-        $mol_wire_method
-    ], $mol_wire_atom.prototype, "recall", null);
     __decorate([
         $mol_wire_method
     ], $mol_wire_atom.prototype, "once", null);
@@ -6652,10 +6630,10 @@ var $;
                 const snapshot = this.snapshot();
                 if (next)
                     return next;
-                return new Set(snapshot.split('~').map(v => parseInt(v, 16)));
+                return new Set(snapshot.split('~').filter(Boolean).map(v => parseInt(v, 36)));
             }
             snapshot_current() {
-                return [...this.state()].map(key => key.toString(16)).join('~');
+                return [...this.state()].map(key => key.toString(36)).join('~');
             }
             cycle() {
                 if (!this.speed())
@@ -6855,7 +6833,7 @@ var $;
             return obj;
         }
         snapshot() {
-            return "3~8003~8002~10003~0~3fff0000~3ffe8001~3fff0002";
+            return "3~pab~paa~1ekj~0~hr8lxc~hr7wn5~hr8lxe";
         }
         snapshot_current() {
             return this.Map().snapshot_current();
@@ -8062,33 +8040,6 @@ var $;
             ], App, "test", null);
             App.test();
         },
-        'Update deps on push'($) {
-            class App extends $mol_object2 {
-                static $ = $;
-                static left(next = false) {
-                    return next;
-                }
-                static right(next = false) {
-                    return next;
-                }
-                static res(next) {
-                    return this.left(next) && this.right();
-                }
-            }
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "left", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "right", null);
-            __decorate([
-                $mol_wire_mem(0)
-            ], App, "res", null);
-            $mol_assert_equal(App.res(), false);
-            $mol_assert_equal(App.res(true), false);
-            $mol_assert_equal(App.right(true), true);
-            $mol_assert_equal(App.res(), true);
-        },
         'Different order of pull and push'($) {
             class App extends $mol_object2 {
                 static $ = $;
@@ -8099,6 +8050,8 @@ var $;
                     return this.store(next);
                 }
                 static slow(next) {
+                    if (next !== undefined)
+                        this.slow();
                     return this.store(next);
                 }
             }
