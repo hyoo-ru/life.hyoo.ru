@@ -1,9 +1,5 @@
 {
 	"$hyoo_life_store_link_hint": "Store snapshot",
-	"$hyoo_life_time_fast_label": "Fast",
-	"$hyoo_life_time_fastest_label": "Fastest",
-	"$hyoo_life_time_slow_label": "Slow",
-	"$hyoo_life_time_slowest_label": "Slowest",
 	"$hyoo_life_title": "Life of {population} cells",
 	"$mol_lights_toggle_hint": "Toggle lights",
 	"$mol_link_source_hint": "Source code"
