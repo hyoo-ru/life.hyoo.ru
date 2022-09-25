@@ -7004,6 +7004,7 @@ var $;
             return [
                 this.Title(),
                 this.Time(),
+                this.Population(),
                 this.Tools()
             ];
         }
@@ -7050,6 +7051,13 @@ var $;
                 5: this.Normal(),
                 1000: this.Fast()
             });
+            return obj;
+        }
+        Population() {
+            const obj = new this.$.$mol_view();
+            obj.sub = () => [
+                this.population()
+            ];
             return obj;
         }
         Lights() {
@@ -7133,6 +7141,9 @@ var $;
     ], $hyoo_life.prototype, "Time", null);
     __decorate([
         $mol_mem
+    ], $hyoo_life.prototype, "Population", null);
+    __decorate([
+        $mol_mem
     ], $hyoo_life.prototype, "Lights", null);
     __decorate([
         $mol_mem
@@ -7162,7 +7173,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/life/life.view.css", "[hyoo_life_time] {\n\tflex: 0 1 auto;\n\tbox-shadow: none;\n\tpadding: 0;\n}\n\n[hyoo_life_time_option] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_life_store_link] {\n\talign-items: center;\n}\n\n[hyoo_life_store_link][mol_link_current] {\n\topacity: .5;\n}\n\n[hyoo_life_map] {\n\tflex: auto;\n\tdisplay: flex;\n}\n");
+    $mol_style_attach("hyoo/life/life.view.css", "[hyoo_life_population] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_life_time] {\n\tflex: 0 1 auto;\n\tbox-shadow: none;\n\tpadding: 0;\n}\n\n[hyoo_life_time_option] {\n\tpadding: var(--mol_gap_text);\n}\n\n[hyoo_life_store_link] {\n\talign-items: center;\n}\n\n[hyoo_life_store_link][mol_link_current] {\n\topacity: .5;\n}\n\n[hyoo_life_map] {\n\tflex: auto;\n\tdisplay: flex;\n}\n");
 })($ || ($ = {}));
 //hyoo/life/-css/life.view.css.ts
 ;

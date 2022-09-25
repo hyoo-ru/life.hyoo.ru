@@ -1,7 +1,7 @@
 {
 	"$hyoo_life_Reset_hint": "Kill All",
 	"$hyoo_life_store_link_hint": "Store snapshot",
-	"$hyoo_life_title": "Life of {population} cells",
+	"$hyoo_life_title": "the Life Game",
 	"$mol_lights_toggle_hint": "Toggle lights",
 	"$mol_link_source_hint": "Source code"
 }

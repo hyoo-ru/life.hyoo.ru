@@ -1918,6 +1918,7 @@ declare namespace $ {
         Normal(): $mol_icon_chevron_double_right;
         Fast(): $mol_icon_chevron_triple_right;
         Time(): $$.$mol_switch;
+        Population(): $mol_view;
         Lights(): $$.$mol_lights_toggle;
         Source_link(): $mol_link_source;
         Reset_icon(): $mol_icon_eraser;
