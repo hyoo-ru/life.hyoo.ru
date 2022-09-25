@@ -1,3 +1,7 @@
+[hyoo_life_population] {
+	padding: var(--mol_gap_text);
+}
+
 [hyoo_life_time] {
 	flex: 0 1 auto;
 	box-shadow: none;
