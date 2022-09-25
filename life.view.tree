@@ -15,6 +15,11 @@ $hyoo_life $mol_page
 		<= Lights $mol_lights_toggle
 		<= Source_link $mol_link_source
 			uri \https://github.com/hyoo-ru/life.hyoo.ru
+		<= Reset $mol_link
+			hint @ \Kill All
+			arg * snapshot \
+			sub /
+				<= Reset_icon $mol_icon_eraser
 		<= Store_link $mol_link_lazy
 			uri_generated <= store_link?val \
 			hint <= store_link_hint @ \Store snapshot
