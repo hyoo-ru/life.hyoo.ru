@@ -1940,6 +1940,7 @@ declare namespace $.$$ {
     class $hyoo_life extends $.$hyoo_life {
         title(): string;
         store_link(): string;
+        speed(next?: number): number;
         snapshot(): string;
     }
 }
