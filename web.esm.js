@@ -4790,6 +4790,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_eraser extends $mol_icon {
+        path() {
+            return "M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21.19,11.34L12,20.53C10.44,22.09 7.91,22.09 6.34,20.53L2.81,17C2.03,16.21 2.03,14.95 2.81,14.16L13.41,3.56C14.2,2.78 15.46,2.78 16.24,3.56M4.22,15.58L7.76,19.11C8.54,19.9 9.8,19.9 10.59,19.11L14.12,15.58L9.17,10.63L4.22,15.58Z";
+        }
+    }
+    $.$mol_icon_eraser = $mol_icon_eraser;
+})($ || ($ = {}));
+//mol/icon/eraser/-view.tree/eraser.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_stored extends $mol_icon {
         path() {
             return "M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z";
@@ -6691,6 +6703,7 @@ var $;
             return [
                 this.Lights(),
                 this.Source_link(),
+                this.Reset(),
                 this.Store_link()
             ];
         }
@@ -6738,6 +6751,21 @@ var $;
         Source_link() {
             const obj = new this.$.$mol_link_source();
             obj.uri = () => "https://github.com/hyoo-ru/life.hyoo.ru";
+            return obj;
+        }
+        Reset_icon() {
+            const obj = new this.$.$mol_icon_eraser();
+            return obj;
+        }
+        Reset() {
+            const obj = new this.$.$mol_link();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_life_Reset_hint');
+            obj.arg = () => ({
+                snapshot: ""
+            });
+            obj.sub = () => [
+                this.Reset_icon()
+            ];
             return obj;
         }
         store_link(val) {
@@ -6803,6 +6831,12 @@ var $;
     ], $hyoo_life.prototype, "Source_link", null);
     __decorate([
         $mol_mem
+    ], $hyoo_life.prototype, "Reset_icon", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_life.prototype, "Reset", null);
+    __decorate([
+        $mol_mem
     ], $hyoo_life.prototype, "store_link", null);
     __decorate([
         $mol_mem
@@ -6837,7 +6871,7 @@ var $;
                 return this.$.$mol_state_arg.make_link({ snapshot: this.snapshot_current() });
             }
             snapshot() {
-                return this.$.$mol_state_arg.value('snapshot') || super.snapshot();
+                return this.$.$mol_state_arg.value('snapshot') ?? super.snapshot();
             }
         }
         $$.$hyoo_life = $hyoo_life;

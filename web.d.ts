@@ -1490,6 +1490,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_eraser extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_stored extends $mol_icon {
         path(): string;
     }
@@ -1914,6 +1920,8 @@ declare namespace $ {
         Time(): $$.$mol_switch;
         Lights(): $$.$mol_lights_toggle;
         Source_link(): $mol_link_source;
+        Reset_icon(): $mol_icon_eraser;
+        Reset(): $$.$mol_link;
         store_link(val?: any): string;
         store_link_hint(): string;
         Stored(): $mol_icon_stored;

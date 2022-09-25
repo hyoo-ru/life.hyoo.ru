@@ -1,4 +1,5 @@
 {
+	"$hyoo_life_Reset_hint": "Kill All",
 	"$hyoo_life_store_link_hint": "Store snapshot",
 	"$hyoo_life_title": "Life of {population} cells",
 	"$mol_lights_toggle_hint": "Toggle lights",
