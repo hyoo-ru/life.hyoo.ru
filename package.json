@@ -111,6 +111,7 @@
     "$mol_theme_auto",
     "$mol_lights",
     "$mol_state_arg",
+    "$mol_action",
     "$mol_media",
     "$mol_icon_chevron_right",
     "$mol_icon_chevron",
@@ -154,8 +155,7 @@
     "$mol_svg_title",
     "$mol_touch",
     "$mol_plot_dot",
-    "$mol_coord",
-    "$mol_action"
+    "$mol_coord"
   ],
   "dependencies": {
     "jsdom": "*",
