@@ -145,6 +145,22 @@ namespace $.$$ {
 		shift( next? : $mol_vector_2d< number > ) {
 			return next || this.size_real().map( v => v / 2 )
 		}
+		
+		@ $mol_mem
+		grid_pos() {
+			let [ x, y ] = this.shift()
+			let shift = this.zoom() / 2
+			x -= shift
+			y -= shift
+			return `${x}px ${y}px`
+		}
+
+		@ $mol_mem
+		grid_size() {
+			let zoom = this.zoom()
+			while( zoom < 8 ) zoom *= 2
+			return `${zoom}px ${zoom}px`
+		}
 
 		dom_tree() {
 			this.cycle()

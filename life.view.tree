@@ -5,7 +5,7 @@ $hyoo_life $mol_page
 	head /
 		<= Title
 		<= Step $mol_button_minor
-			sub / <= Step_icon $mol_icon_skip_next
+			sub / <= Step_icon $mol_icon_step_forward
 			click <= step
 		<= Time $mol_switch
 			value?val <=> speed?val 0

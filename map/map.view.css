@@ -1,3 +1,16 @@
 [hyoo_life_map] {
 	position: relative;
+	background: linear-gradient(
+		to right,
+		var(--mol_theme_card) 0,
+		var(--mol_theme_card) 1px,
+		transparent 1px,
+		transparent 100%
+	), linear-gradient(
+		to bottom,
+		var(--mol_theme_card) 0,
+		var(--mol_theme_card) 1px,
+		transparent 1px,
+		transparent 100%
+	);
 }

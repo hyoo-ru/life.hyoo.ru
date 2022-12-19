@@ -7,6 +7,11 @@ $hyoo_life_map $mol_plot_pane
 		<= zoom
 		<= zoom
 	-
+	style *
+		^
+		backgroundSize <= grid_size \
+		backgroundPosition <= grid_pos \
+	-
 	graphs /
 		<= Points $mol_plot_dot
 			diameter <= zoom
