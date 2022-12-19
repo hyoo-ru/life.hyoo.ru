@@ -8,7 +8,11 @@ namespace $.$$ {
 			if( next ) return next
 			return new Set( snapshot.split( '~' ).filter( Boolean ).map( v => parseInt( v , 36 ) ) )
 		}
-
+		
+		state( next? : Set<number> ) {
+			return this.alive( next )
+		}
+		
 		@ $mol_mem
 		hot( next?: Set<number> ) {
 			this.snapshot()
@@ -84,22 +88,22 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		points_x() {
+		alive_points_x() {
 			return [ ... this.alive().keys() ].map(key => $mol_coord_high( key ))
 		}
 
 		@ $mol_mem
-		points_y() {
+		alive_points_y() {
 			return [ ... this.alive().keys() ].map(key => $mol_coord_low( key ))
 		}
 		
 		@ $mol_mem
-		points_x_sleep() {
+		hot_points_x() {
 			return [ ... this.hot().keys() ].map(key => $mol_coord_high( key ))
 		}
 
 		@ $mol_mem
-		points_y_sleep() {
+		hot_points_y() {
 			return [ ... this.hot().keys() ].map(key => $mol_coord_low( key ))
 		}
 		
@@ -123,12 +127,15 @@ namespace $.$$ {
 			
 			const cell = this.action_cell()
 			const alive = new Set( this.alive() )
+			const hot = new Set( this.hot() )
 			
 			if( this._draw_start_state ) alive.add( cell )
 			else alive.delete( cell )
 			
+			hot.add( cell )
+			
 			this.alive( alive )
-			this.hot( new Set([ ... this.hot(), cell ]) )
+			this.hot( hot )
 			
 		}
 
