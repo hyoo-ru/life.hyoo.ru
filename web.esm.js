@@ -3838,14 +3838,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_skip_next extends $mol_icon {
+    class $mol_icon_step_forward extends $mol_icon {
         path() {
-            return "M16,18H18V6H16M6,18L14.5,12L6,6V18Z";
+            return "M5,5V19H8V5M10,5V19L21,12";
         }
     }
-    $.$mol_icon_skip_next = $mol_icon_skip_next;
+    $.$mol_icon_step_forward = $mol_icon_step_forward;
 })($ || ($ = {}));
-//mol/icon/skip/next/-view.tree/next.view.tree.ts
+//mol/icon/step/forward/-view.tree/forward.view.tree.ts
 ;
 "use strict";
 var $;
@@ -6552,6 +6552,13 @@ var $;
             const obj = new this.$.$mol_vector_2d(this.zoom(), this.zoom());
             return obj;
         }
+        style() {
+            return {
+                ...super.style(),
+                backgroundSize: this.grid_size(),
+                backgroundPosition: this.grid_pos()
+            };
+        }
         graphs() {
             return [
                 this.Points()
@@ -6568,6 +6575,12 @@ var $;
         }
         population() {
             return 0;
+        }
+        grid_size() {
+            return "";
+        }
+        grid_pos() {
+            return "";
         }
         points_x() {
             return [];
@@ -6599,7 +6612,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/life/map/map.view.css", "[hyoo_life_map] {\n\tposition: relative;\n}\n");
+    $mol_style_attach("hyoo/life/map/map.view.css", "[hyoo_life_map] {\n\tposition: relative;\n\tbackground: linear-gradient(\n\t\tto right,\n\t\tvar(--mol_theme_card) 0,\n\t\tvar(--mol_theme_card) 1px,\n\t\ttransparent 1px,\n\t\ttransparent 100%\n\t), linear-gradient(\n\t\tto bottom,\n\t\tvar(--mol_theme_card) 0,\n\t\tvar(--mol_theme_card) 1px,\n\t\ttransparent 1px,\n\t\ttransparent 100%\n\t);\n}\n");
 })($ || ($ = {}));
 //hyoo/life/map/-css/map.view.css.ts
 ;
@@ -6708,6 +6721,19 @@ var $;
             shift(next) {
                 return next || this.size_real().map(v => v / 2);
             }
+            grid_pos() {
+                let [x, y] = this.shift();
+                let shift = this.zoom() / 2;
+                x -= shift;
+                y -= shift;
+                return `${x}px ${y}px`;
+            }
+            grid_size() {
+                let zoom = this.zoom();
+                while (zoom < 8)
+                    zoom *= 2;
+                return `${zoom}px ${zoom}px`;
+            }
             dom_tree() {
                 this.cycle();
                 this.hot();
@@ -6756,6 +6782,12 @@ var $;
         __decorate([
             $mol_mem
         ], $hyoo_life_map.prototype, "shift", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_life_map.prototype, "grid_pos", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_life_map.prototype, "grid_size", null);
         $$.$hyoo_life_map = $hyoo_life_map;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -6801,7 +6833,7 @@ var $;
             return obj;
         }
         Step_icon() {
-            const obj = new this.$.$mol_icon_skip_next();
+            const obj = new this.$.$mol_icon_step_forward();
             return obj;
         }
         Step() {

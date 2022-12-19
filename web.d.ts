@@ -1119,7 +1119,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_skip_next extends $mol_icon {
+    class $mol_icon_step_forward extends $mol_icon {
         path(): string;
     }
 }
@@ -1891,11 +1891,17 @@ declare namespace $ {
         gap_vert(): number;
         zoom(val?: any): number;
         scale(): $mol_vector_2d<number>;
+        style(): {
+            backgroundSize: string;
+            backgroundPosition: string;
+        };
         graphs(): readonly any[];
         snapshot(): string;
         snapshot_current(): string;
         speed(): number;
         population(): number;
+        grid_size(): string;
+        grid_pos(): string;
         points_x(): readonly number[];
         points_y(): readonly number[];
         Points(): $$.$mol_plot_dot;
@@ -1924,6 +1930,8 @@ declare namespace $.$$ {
         draw_end(event: Event): void;
         zoom(next?: number): number;
         shift(next?: $mol_vector_2d<number>): $mol_vector<number, 2>;
+        grid_pos(): string;
+        grid_size(): string;
         dom_tree(): Element;
     }
 }
@@ -1936,7 +1944,7 @@ declare namespace $ {
         tools(): readonly any[];
         sub(): readonly any[];
         Theme(): $$.$mol_theme_auto;
-        Step_icon(): $mol_icon_skip_next;
+        Step_icon(): $mol_icon_step_forward;
         Step(): $mol_button_minor;
         speed(val?: any): number;
         Normal(): $mol_icon_play;
