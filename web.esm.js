@@ -3838,50 +3838,14 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    class $mol_icon_chevron extends $mol_icon {
+    class $mol_icon_skip_next extends $mol_icon {
         path() {
-            return "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
+            return "M16,18H18V6H16M6,18L14.5,12L6,6V18Z";
         }
     }
-    $.$mol_icon_chevron = $mol_icon_chevron;
+    $.$mol_icon_skip_next = $mol_icon_skip_next;
 })($ || ($ = {}));
-//mol/icon/chevron/-view.tree/chevron.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_chevron_right extends $mol_icon {
-        path() {
-            return "M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z";
-        }
-    }
-    $.$mol_icon_chevron_right = $mol_icon_chevron_right;
-})($ || ($ = {}));
-//mol/icon/chevron/right/-view.tree/right.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_chevron_double_right extends $mol_icon {
-        path() {
-            return "M5.59,7.41L7,6L13,12L7,18L5.59,16.59L10.17,12L5.59,7.41M11.59,7.41L13,6L19,12L13,18L11.59,16.59L16.17,12L11.59,7.41Z";
-        }
-    }
-    $.$mol_icon_chevron_double_right = $mol_icon_chevron_double_right;
-})($ || ($ = {}));
-//mol/icon/chevron/double/right/-view.tree/right.view.tree.ts
-;
-"use strict";
-var $;
-(function ($) {
-    class $mol_icon_chevron_triple_right extends $mol_icon {
-        path() {
-            return "M14.58,16.59L19.17,12L14.58,7.41L16,6L22,12L16,18L14.58,16.59M8.58,16.59L13.17,12L8.58,7.41L10,6L16,12L10,18L8.58,16.59M2.58,16.59L7.17,12L2.58,7.41L4,6L10,12L4,18L2.58,16.59Z";
-        }
-    }
-    $.$mol_icon_chevron_triple_right = $mol_icon_chevron_triple_right;
-})($ || ($ = {}));
-//mol/icon/chevron/triple/right/-view.tree/right.view.tree.ts
+//mol/icon/skip/next/-view.tree/next.view.tree.ts
 ;
 "use strict";
 var $;
@@ -4256,6 +4220,30 @@ var $;
     $mol_style_attach("mol/button/minor/minor.view.css", "[mol_button_minor] {\n\tcolor: var(--mol_theme_control);\n}\n\n[mol_button_minor][disabled] {\n\tcolor: var(--mol_theme_shade);\n}\n");
 })($ || ($ = {}));
 //mol/button/minor/-css/minor.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_play extends $mol_icon {
+        path() {
+            return "M8,5.14V19.14L19,12.14L8,5.14Z";
+        }
+    }
+    $.$mol_icon_play = $mol_icon_play;
+})($ || ($ = {}));
+//mol/icon/play/-view.tree/play.view.tree.ts
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_fast_forward extends $mol_icon {
+        path() {
+            return "M13,6V18L21.5,12M4,18L12.5,12L4,6V18Z";
+        }
+    }
+    $.$mol_icon_fast_forward = $mol_icon_fast_forward;
+})($ || ($ = {}));
+//mol/icon/fast/forward/-view.tree/forward.view.tree.ts
 ;
 "use strict";
 var $;
@@ -6788,6 +6776,7 @@ var $;
         head() {
             return [
                 this.Title(),
+                this.Step(),
                 this.Time(),
                 this.Population(),
                 this.Tools()
@@ -6811,28 +6800,35 @@ var $;
             const obj = new this.$.$mol_theme_auto();
             return obj;
         }
+        Step_icon() {
+            const obj = new this.$.$mol_icon_skip_next();
+            return obj;
+        }
+        Step() {
+            const obj = new this.$.$mol_button_minor();
+            obj.sub = () => [
+                this.Step_icon()
+            ];
+            obj.click = () => this.step();
+            return obj;
+        }
         speed(val) {
             if (val !== undefined)
                 return val;
             return 0;
         }
-        Slow() {
-            const obj = new this.$.$mol_icon_chevron_right();
-            return obj;
-        }
         Normal() {
-            const obj = new this.$.$mol_icon_chevron_double_right();
+            const obj = new this.$.$mol_icon_play();
             return obj;
         }
         Fast() {
-            const obj = new this.$.$mol_icon_chevron_triple_right();
+            const obj = new this.$.$mol_icon_fast_forward();
             return obj;
         }
         Time() {
             const obj = new this.$.$mol_switch();
             obj.value = (val) => this.speed(val);
             obj.options = () => ({
-                1: this.Slow(),
                 5: this.Normal(),
                 1000: this.Fast()
             });
@@ -6899,6 +6895,9 @@ var $;
         population() {
             return this.Map().population();
         }
+        step() {
+            return this.Map().step();
+        }
         Map() {
             const obj = new this.$.$hyoo_life_map();
             obj.speed = () => this.speed();
@@ -6911,10 +6910,13 @@ var $;
     ], $hyoo_life.prototype, "Theme", null);
     __decorate([
         $mol_mem
-    ], $hyoo_life.prototype, "speed", null);
+    ], $hyoo_life.prototype, "Step_icon", null);
     __decorate([
         $mol_mem
-    ], $hyoo_life.prototype, "Slow", null);
+    ], $hyoo_life.prototype, "Step", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_life.prototype, "speed", null);
     __decorate([
         $mol_mem
     ], $hyoo_life.prototype, "Normal", null);
@@ -6981,6 +6983,10 @@ var $;
             }
             snapshot() {
                 return this.$.$mol_state_arg.value('snapshot') ?? super.snapshot();
+            }
+            step() {
+                this.speed(0);
+                super.step();
             }
         }
         __decorate([

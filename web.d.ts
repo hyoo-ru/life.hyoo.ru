@@ -1119,25 +1119,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_chevron extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_chevron_right extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_chevron_double_right extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_chevron_triple_right extends $mol_icon {
+    class $mol_icon_skip_next extends $mol_icon {
         path(): string;
     }
 }
@@ -1337,6 +1319,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_play extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_fast_forward extends $mol_icon {
+        path(): string;
+    }
 }
 
 declare namespace $ {
@@ -1942,10 +1936,11 @@ declare namespace $ {
         tools(): readonly any[];
         sub(): readonly any[];
         Theme(): $$.$mol_theme_auto;
+        Step_icon(): $mol_icon_skip_next;
+        Step(): $mol_button_minor;
         speed(val?: any): number;
-        Slow(): $mol_icon_chevron_right;
-        Normal(): $mol_icon_chevron_double_right;
-        Fast(): $mol_icon_chevron_triple_right;
+        Normal(): $mol_icon_play;
+        Fast(): $mol_icon_fast_forward;
         Time(): $$.$mol_switch;
         Population(): $mol_view;
         Lights(): $$.$mol_lights_toggle;
@@ -1959,6 +1954,7 @@ declare namespace $ {
         snapshot(): string;
         snapshot_current(): string;
         population(): number;
+        step(): void;
         Map(): $$.$hyoo_life_map;
     }
 }
@@ -1972,6 +1968,7 @@ declare namespace $.$$ {
         store_link(): string;
         speed(next?: number): number;
         snapshot(): string;
+        step(): void;
     }
 }
 
