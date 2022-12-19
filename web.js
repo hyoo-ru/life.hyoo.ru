@@ -6561,7 +6561,8 @@ var $;
         }
         graphs() {
             return [
-                this.Points()
+                this.Alive(),
+                this.Hot()
             ];
         }
         snapshot() {
@@ -6582,17 +6583,30 @@ var $;
         grid_pos() {
             return "";
         }
-        points_x() {
+        alive_points_x() {
             return [];
         }
-        points_y() {
+        alive_points_y() {
             return [];
         }
-        Points() {
+        Alive() {
             const obj = new this.$.$mol_plot_dot();
             obj.diameter = () => this.zoom();
-            obj.series_x = () => this.points_x();
-            obj.series_y = () => this.points_y();
+            obj.series_x = () => this.alive_points_x();
+            obj.series_y = () => this.alive_points_y();
+            return obj;
+        }
+        hot_points_x() {
+            return [];
+        }
+        hot_points_y() {
+            return [];
+        }
+        Hot() {
+            const obj = new this.$.$mol_plot_dot();
+            obj.diameter = () => this.zoom();
+            obj.series_x = () => this.hot_points_x();
+            obj.series_y = () => this.hot_points_y();
             return obj;
         }
     }
@@ -6604,7 +6618,10 @@ var $;
     ], $hyoo_life_map.prototype, "scale", null);
     __decorate([
         $mol_mem
-    ], $hyoo_life_map.prototype, "Points", null);
+    ], $hyoo_life_map.prototype, "Alive", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_life_map.prototype, "Hot", null);
     $.$hyoo_life_map = $hyoo_life_map;
 })($ || ($ = {}));
 //hyoo/life/map/-view.tree/map.view.tree.ts
@@ -6612,7 +6629,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("hyoo/life/map/map.view.css", "[hyoo_life_map] {\n\tposition: relative;\n\tbackground: linear-gradient(\n\t\tto right,\n\t\tvar(--mol_theme_card) 0,\n\t\tvar(--mol_theme_card) 1px,\n\t\ttransparent 1px,\n\t\ttransparent 100%\n\t), linear-gradient(\n\t\tto bottom,\n\t\tvar(--mol_theme_card) 0,\n\t\tvar(--mol_theme_card) 1px,\n\t\ttransparent 1px,\n\t\ttransparent 100%\n\t);\n}\n");
+    $mol_style_attach("hyoo/life/map/map.view.css", "[hyoo_life_map] {\n\tposition: relative;\n\tbackground: linear-gradient(\n\t\tto right,\n\t\tvar(--mol_theme_card) 0,\n\t\tvar(--mol_theme_card) 1px,\n\t\ttransparent 1px,\n\t\ttransparent 100%\n\t), linear-gradient(\n\t\tto bottom,\n\t\tvar(--mol_theme_card) 0,\n\t\tvar(--mol_theme_card) 1px,\n\t\ttransparent 1px,\n\t\ttransparent 100%\n\t);\n}\n\n[hyoo_life_map_hot] {\n\tcolor: var(--mol_theme_special);\n\topacity: .25;\n}\n");
 })($ || ($ = {}));
 //hyoo/life/map/-css/map.view.css.ts
 ;
@@ -6627,6 +6644,9 @@ var $;
                 if (next)
                     return next;
                 return new Set(snapshot.split('~').filter(Boolean).map(v => parseInt(v, 36)));
+            }
+            state(next) {
+                return this.alive(next);
             }
             hot(next) {
                 this.snapshot();
@@ -6682,16 +6702,16 @@ var $;
             population() {
                 return this.alive().size;
             }
-            points_x() {
+            alive_points_x() {
                 return [...this.alive().keys()].map(key => $mol_coord_high(key));
             }
-            points_y() {
+            alive_points_y() {
                 return [...this.alive().keys()].map(key => $mol_coord_low(key));
             }
-            points_x_sleep() {
+            hot_points_x() {
                 return [...this.hot().keys()].map(key => $mol_coord_high(key));
             }
-            points_y_sleep() {
+            hot_points_y() {
                 return [...this.hot().keys()].map(key => $mol_coord_low(key));
             }
             _draw_start_state = true;
@@ -6705,12 +6725,14 @@ var $;
             draw(event) {
                 const cell = this.action_cell();
                 const alive = new Set(this.alive());
+                const hot = new Set(this.hot());
                 if (this._draw_start_state)
                     alive.add(cell);
                 else
                     alive.delete(cell);
+                hot.add(cell);
                 this.alive(alive);
-                this.hot(new Set([...this.hot(), cell]));
+                this.hot(hot);
             }
             draw_end(event) {
                 this.draw(event);
@@ -6760,16 +6782,16 @@ var $;
         ], $hyoo_life_map.prototype, "population", null);
         __decorate([
             $mol_mem
-        ], $hyoo_life_map.prototype, "points_x", null);
+        ], $hyoo_life_map.prototype, "alive_points_x", null);
         __decorate([
             $mol_mem
-        ], $hyoo_life_map.prototype, "points_y", null);
+        ], $hyoo_life_map.prototype, "alive_points_y", null);
         __decorate([
             $mol_mem
-        ], $hyoo_life_map.prototype, "points_x_sleep", null);
+        ], $hyoo_life_map.prototype, "hot_points_x", null);
         __decorate([
             $mol_mem
-        ], $hyoo_life_map.prototype, "points_y_sleep", null);
+        ], $hyoo_life_map.prototype, "hot_points_y", null);
         __decorate([
             $mol_mem
         ], $hyoo_life_map.prototype, "action_cell", null);

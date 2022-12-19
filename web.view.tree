@@ -435,10 +435,14 @@ $hyoo_life_map $mol_plot_pane
 		backgroundPosition <= grid_pos \
 	-
 	graphs /
-		<= Points $mol_plot_dot
+		<= Alive $mol_plot_dot
 			diameter <= zoom
-			series_x <= points_x /number
-			series_y <= points_y /number
+			series_x <= alive_points_x /number
+			series_y <= alive_points_y /number
+		<= Hot $mol_plot_dot
+			diameter <= zoom
+			series_x <= hot_points_x /number
+			series_y <= hot_points_y /number
 	-
 	-
 	snapshot \

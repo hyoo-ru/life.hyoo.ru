@@ -1902,9 +1902,12 @@ declare namespace $ {
         population(): number;
         grid_size(): string;
         grid_pos(): string;
-        points_x(): readonly number[];
-        points_y(): readonly number[];
-        Points(): $$.$mol_plot_dot;
+        alive_points_x(): readonly number[];
+        alive_points_y(): readonly number[];
+        Alive(): $$.$mol_plot_dot;
+        hot_points_x(): readonly number[];
+        hot_points_y(): readonly number[];
+        Hot(): $$.$mol_plot_dot;
     }
 }
 
@@ -1914,15 +1917,16 @@ declare namespace $ {
 declare namespace $.$$ {
     class $hyoo_life_map extends $.$hyoo_life_map {
         alive(next?: Set<number>): Set<number>;
+        state(next?: Set<number>): Set<number>;
         hot(next?: Set<number>): Set<number>;
         snapshot_current(): string;
         cycle(): $mol_after_timeout | null;
         step(): void;
         population(): number;
-        points_x(): number[];
-        points_y(): number[];
-        points_x_sleep(): number[];
-        points_y_sleep(): number[];
+        alive_points_x(): number[];
+        alive_points_y(): number[];
+        hot_points_x(): number[];
+        hot_points_y(): number[];
         _draw_start_state: boolean;
         action_cell(): number;
         draw_start(event: Event): void;
