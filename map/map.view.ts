@@ -3,15 +3,21 @@ namespace $.$$ {
 	export class $hyoo_life_map extends $.$hyoo_life_map {
 
 		@ $mol_mem
-		state( next? : Set<number> ) {
+		alive( next? : Set<number> ) {
 			const snapshot = this.snapshot()
 			if( next ) return next
 			return new Set( snapshot.split( '~' ).filter( Boolean ).map( v => parseInt( v , 36 ) ) )
 		}
 
 		@ $mol_mem
+		hot( next?: Set<number> ) {
+			this.snapshot()
+			return next ?? this.alive()
+		}
+
+		@ $mol_mem
 		snapshot_current() {
-			return [ ... this.state() ].map( key => key.toString( 36 ) ).join( '~' )
+			return [ ... this.alive() ].map( key => key.toString( 36 ) ).join( '~' )
 		}
 
 		@ $mol_mem
@@ -19,7 +25,7 @@ namespace $.$$ {
 			
 			if( !this.speed() ) return null
 
-			this.state()
+			this.alive()
 			
 			return new this.$.$mol_after_timeout( 1000 / this.speed() || 0 , this.step.bind( this ) )
 		}
@@ -27,19 +33,22 @@ namespace $.$$ {
 		@ $mol_action
 		step() {
 			
-			let prev = this.state()
+			let alive_prev = this.alive()
+			let hot_rev = this.hot()
 		
-			const state = new Set<number>()
+			const alive_next = new Set<number>( alive_prev )
+			const hot_next = new Set<number>()
 			const skip = new Set<number>()
 
-			for( let alive of prev ) {
+			for( let hot of hot_rev ) {
 				
-				const ax = $mol_coord_high( alive )
-				const ay = $mol_coord_low( alive )
+				const hx = $mol_coord_high( hot )
+				const hy = $mol_coord_low( hot )
 				
-				for( let ny = ay - 1 ; ny <= ay + 1 ; ++ny ) for( let nx = ax - 1 ; nx <= ax + 1 ; ++nx ) {
+				for( let ny = hy - 1 ; ny <= hy + 1 ; ++ny ) for( let nx = hx - 1 ; nx <= hx + 1 ; ++nx ) {
 
 					const nkey = $mol_coord_pack( nx , ny )
+					
 					if( skip.has( nkey ) ) continue
 					skip.add( nkey )
 					
@@ -47,33 +56,51 @@ namespace $.$$ {
 
 					for( let y = -1 ; y <= 1 ; ++y ) for( let x = -1 ; x <= 1 ; ++x ) {
 						if( !x && !y ) continue
-						if( prev.has( $mol_coord_pack( nx + x , ny + y ) ) ) ++sum
+						const coord = $mol_coord_pack( nx + x , ny + y )
+						if( alive_prev.has( coord ) ) ++sum
 					}
 					
-					if( sum != 3 && ( !prev.has( nkey ) || sum !== 2 ) ) continue
-					state.add( nkey )
+					const dead_prev = !alive_prev.has( nkey )
+					const dead_next = sum != 3 && ( dead_prev || sum !== 2 )
+					
+					if( dead_next === dead_prev ) continue
+					hot_next.add( nkey )
+					
+					if( dead_next ) alive_next.delete( nkey )
+					else alive_next.add( nkey )
 					
 				}
 
 			}
 
-			this.state( state )
+			this.alive( alive_next )
+			this.hot( hot_next )
 
 		}
 
 		@ $mol_mem
 		population() {
-			return this.state().size
+			return this.alive().size
 		}
 
 		@ $mol_mem
 		points_x() {
-			return [ ... this.state().keys() ].map(key => $mol_coord_high( key ))
+			return [ ... this.alive().keys() ].map(key => $mol_coord_high( key ))
 		}
 
 		@ $mol_mem
 		points_y() {
-			return [ ... this.state().keys() ].map(key => $mol_coord_low( key ))
+			return [ ... this.alive().keys() ].map(key => $mol_coord_low( key ))
+		}
+		
+		@ $mol_mem
+		points_x_sleep() {
+			return [ ... this.hot().keys() ].map(key => $mol_coord_high( key ))
+		}
+
+		@ $mol_mem
+		points_y_sleep() {
+			return [ ... this.hot().keys() ].map(key => $mol_coord_low( key ))
 		}
 		
 		_draw_start_state = true
@@ -88,18 +115,21 @@ namespace $.$$ {
 		}
 		
 		draw_start( event: Event ) {
-			this._draw_start_state = !this.state().has( this.action_cell() )
+			this._draw_start_state = !this.alive().has( this.action_cell() )
 		}
 
+		@ $mol_action
 		draw( event: Event ) {
 			
 			const cell = this.action_cell()
-			const state = new Set( this.state() )
+			const alive = new Set( this.alive() )
 			
-			if( this._draw_start_state ) state.add( cell )
-			else state.delete( cell )
+			if( this._draw_start_state ) alive.add( cell )
+			else alive.delete( cell )
 			
-			this.state( state )
+			this.alive( alive )
+			this.hot( new Set([ ... this.hot(), cell ]) )
+			
 		}
 
 		draw_end( event: Event ) {
@@ -118,6 +148,7 @@ namespace $.$$ {
 
 		dom_tree() {
 			this.cycle()
+			this.hot()
 			return super.dom_tree()
 		}
 		
