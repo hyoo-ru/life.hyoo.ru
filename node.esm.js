@@ -6931,30 +6931,36 @@ var $;
     var $$;
     (function ($$) {
         class $hyoo_life_map extends $.$hyoo_life_map {
-            state(next) {
+            alive(next) {
                 const snapshot = this.snapshot();
                 if (next)
                     return next;
                 return new Set(snapshot.split('~').filter(Boolean).map(v => parseInt(v, 36)));
             }
+            hot(next) {
+                this.snapshot();
+                return next ?? this.alive();
+            }
             snapshot_current() {
-                return [...this.state()].map(key => key.toString(36)).join('~');
+                return [...this.alive()].map(key => key.toString(36)).join('~');
             }
             cycle() {
                 if (!this.speed())
                     return null;
-                this.state();
+                this.alive();
                 return new this.$.$mol_after_timeout(1000 / this.speed() || 0, this.step.bind(this));
             }
             step() {
-                let prev = this.state();
-                const state = new Set();
+                let alive_prev = this.alive();
+                let hot_rev = this.hot();
+                const alive_next = new Set(alive_prev);
+                const hot_next = new Set();
                 const skip = new Set();
-                for (let alive of prev) {
-                    const ax = $mol_coord_high(alive);
-                    const ay = $mol_coord_low(alive);
-                    for (let ny = ay - 1; ny <= ay + 1; ++ny)
-                        for (let nx = ax - 1; nx <= ax + 1; ++nx) {
+                for (let hot of hot_rev) {
+                    const hx = $mol_coord_high(hot);
+                    const hy = $mol_coord_low(hot);
+                    for (let ny = hy - 1; ny <= hy + 1; ++ny)
+                        for (let nx = hx - 1; nx <= hx + 1; ++nx) {
                             const nkey = $mol_coord_pack(nx, ny);
                             if (skip.has(nkey))
                                 continue;
@@ -6964,24 +6970,38 @@ var $;
                                 for (let x = -1; x <= 1; ++x) {
                                     if (!x && !y)
                                         continue;
-                                    if (prev.has($mol_coord_pack(nx + x, ny + y)))
+                                    const coord = $mol_coord_pack(nx + x, ny + y);
+                                    if (alive_prev.has(coord))
                                         ++sum;
                                 }
-                            if (sum != 3 && (!prev.has(nkey) || sum !== 2))
+                            const dead_prev = !alive_prev.has(nkey);
+                            const dead_next = sum != 3 && (dead_prev || sum !== 2);
+                            if (dead_next === dead_prev)
                                 continue;
-                            state.add(nkey);
+                            hot_next.add(nkey);
+                            if (dead_next)
+                                alive_next.delete(nkey);
+                            else
+                                alive_next.add(nkey);
                         }
                 }
-                this.state(state);
+                this.alive(alive_next);
+                this.hot(hot_next);
             }
             population() {
-                return this.state().size;
+                return this.alive().size;
             }
             points_x() {
-                return [...this.state().keys()].map(key => $mol_coord_high(key));
+                return [...this.alive().keys()].map(key => $mol_coord_high(key));
             }
             points_y() {
-                return [...this.state().keys()].map(key => $mol_coord_low(key));
+                return [...this.alive().keys()].map(key => $mol_coord_low(key));
+            }
+            points_x_sleep() {
+                return [...this.hot().keys()].map(key => $mol_coord_high(key));
+            }
+            points_y_sleep() {
+                return [...this.hot().keys()].map(key => $mol_coord_low(key));
             }
             _draw_start_state = true;
             action_cell() {
@@ -6989,16 +7009,17 @@ var $;
                 return $mol_coord_pack(Math.round(point.x), Math.round(point.y));
             }
             draw_start(event) {
-                this._draw_start_state = !this.state().has(this.action_cell());
+                this._draw_start_state = !this.alive().has(this.action_cell());
             }
             draw(event) {
                 const cell = this.action_cell();
-                const state = new Set(this.state());
+                const alive = new Set(this.alive());
                 if (this._draw_start_state)
-                    state.add(cell);
+                    alive.add(cell);
                 else
-                    state.delete(cell);
-                this.state(state);
+                    alive.delete(cell);
+                this.alive(alive);
+                this.hot(new Set([...this.hot(), cell]));
             }
             draw_end(event) {
                 this.draw(event);
@@ -7011,12 +7032,16 @@ var $;
             }
             dom_tree() {
                 this.cycle();
+                this.hot();
                 return super.dom_tree();
             }
         }
         __decorate([
             $mol_mem
-        ], $hyoo_life_map.prototype, "state", null);
+        ], $hyoo_life_map.prototype, "alive", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_life_map.prototype, "hot", null);
         __decorate([
             $mol_mem
         ], $hyoo_life_map.prototype, "snapshot_current", null);
@@ -7037,7 +7062,16 @@ var $;
         ], $hyoo_life_map.prototype, "points_y", null);
         __decorate([
             $mol_mem
+        ], $hyoo_life_map.prototype, "points_x_sleep", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_life_map.prototype, "points_y_sleep", null);
+        __decorate([
+            $mol_mem
         ], $hyoo_life_map.prototype, "action_cell", null);
+        __decorate([
+            $mol_action
+        ], $hyoo_life_map.prototype, "draw", null);
         __decorate([
             $mol_mem
         ], $hyoo_life_map.prototype, "zoom", null);

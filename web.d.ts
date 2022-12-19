@@ -1913,13 +1913,16 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $hyoo_life_map extends $.$hyoo_life_map {
-        state(next?: Set<number>): Set<number>;
+        alive(next?: Set<number>): Set<number>;
+        hot(next?: Set<number>): Set<number>;
         snapshot_current(): string;
         cycle(): $mol_after_timeout | null;
         step(): void;
         population(): number;
         points_x(): number[];
         points_y(): number[];
+        points_x_sleep(): number[];
+        points_y_sleep(): number[];
         _draw_start_state: boolean;
         action_cell(): number;
         draw_start(event: Event): void;
