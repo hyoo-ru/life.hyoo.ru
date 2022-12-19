@@ -19,6 +19,11 @@ namespace $.$$ {
 		snapshot() {
 			return this.$.$mol_state_arg.value( 'snapshot' ) ?? super.snapshot()
 		}
+		
+		step() {
+			this.speed(0)
+			super.step()
+		}
 
 	}
 
