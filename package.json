@@ -113,7 +113,6 @@
     "$mol_lights",
     "$mol_state_arg",
     "$mol_action",
-    "$mol_media",
     "$mol_icon_step_forward",
     "$mol_icon_step",
     "$mol_icon",
