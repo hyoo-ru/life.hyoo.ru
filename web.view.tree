@@ -69,7 +69,7 @@ $mol_icon_step_forward $mol_icon path \M5,5V19H8V5M10,5V19L21,12
 $mol_speck $mol_view
 	attr *
 		^
-		mol_theme \$mol_theme_accent
+		mol_theme <= theme \$mol_theme_accent
 	style *
 		^
 		minHeight \1em
