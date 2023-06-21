@@ -1,6 +1,6 @@
 $mol_scroll $mol_view
-	scroll_top?val 0
-	scroll_left?val 0
+	scroll_top? 0
+	scroll_left? 0
 	field *
 		^
 		tabIndex <= tabindex -1
@@ -26,7 +26,7 @@ $mol_page $mol_view
 				<= Tools $mol_view
 					sub <= tools /$mol_view_content
 		<= Body $mol_scroll
-			scroll_top?val => body_scroll_top?val
+			scroll_top? => body_scroll_top?
 			sub <= body /$mol_view_content
 		<= Foot $mol_view
 			dom_name \footer
@@ -121,7 +121,7 @@ $mol_check $mol_button_minor
 
 $mol_check_list $mol_view
 	Option* $mol_check
-		checked?val <=> option_checked*?val false
+		checked? <=> option_checked*? false
 		label <= option_label* /
 			<= option_title* \
 		enabled <= option_enabled* <= enabled true
@@ -132,7 +132,7 @@ $mol_check_list $mol_view
 	sub <= items /$mol_check
 
 $mol_switch $mol_check_list
-	value?val \
+	value? \
 
 $mol_check_icon $mol_check
 
@@ -141,7 +141,7 @@ $mol_icon_brightness_6 $mol_icon path \M12,18V6C15.31,6 18,8.69 18,12C18,15.31 1
 $mol_lights_toggle $mol_check_icon
 	Icon <= Lights_icon $mol_icon_brightness_6
 	hint @ \Toggle lights
-	checked?val <=> lights?val false
+	checked? <=> lights? false
 
 $mol_link $mol_view
 	uri \
@@ -172,7 +172,7 @@ $mol_icon_eraser $mol_icon path \M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21
 $mol_icon_stored $mol_icon path \M10.5,17.5L7,14L8.41,12.59L10.5,14.67L15.68,9.5L17.09,10.91M10,4H14V6H10M20,6H16V4L14,2H10L8,4V6H4C2.89,6 2,6.89 2,8V19C2,20.11 2.89,21 4,21H20C21.11,21 22,20.11 22,19V8C22,6.89 21.11,6 20,6Z
 
 $mol_link_lazy $mol_link
-	uri?val \
+	uri? \
 	uri_generated \
 	current false
 	event *
@@ -260,44 +260,44 @@ $mol_plot_graph_sample $mol_view
 		color <= color \black
 
 $mol_touch $mol_plugin
-	start_zoom?val 0
-	start_distance?val 0
-	zoom?val 1
+	start_zoom? 0
+	start_distance? 0
+	zoom? 1
 	allow_draw true
 	allow_pan true
 	allow_zoom true
-	action_type?val \
-	action_point?val $mol_vector_2d /
+	action_type? \
+	action_point? $mol_vector_2d /
 		NaN
 		NaN
 	-
-	start_pan?val /
+	start_pan? /
 		0
 		0
-	pan?val $mol_vector_2d /
+	pan? $mol_vector_2d /
 		0
 		0
 	pointer_center $mol_vector_2d /
 		NaN
 		NaN
 	-
-	start_pos?val null
+	start_pos? null
 	swipe_precision 16
 	-
-	swipe_right?val null
-	swipe_bottom?val null
-	swipe_left?val null
-	swipe_top?val null
+	swipe_right? null
+	swipe_bottom? null
+	swipe_left? null
+	swipe_top? null
 	-
-	swipe_from_right?val null
-	swipe_from_bottom?val null
-	swipe_from_left?val null
-	swipe_from_top?val null
+	swipe_from_right? null
+	swipe_from_bottom? null
+	swipe_from_left? null
+	swipe_from_top? null
 	-
-	swipe_to_right?val null
-	swipe_to_bottom?val null
-	swipe_to_left?val null
-	swipe_to_top?val null
+	swipe_to_right? null
+	swipe_to_bottom? null
+	swipe_to_left? null
+	swipe_to_top? null
 	-
 	draw_start?event null
 	draw?event null
@@ -319,8 +319,8 @@ $mol_touch $mol_plugin
 $mol_plot_pane $mol_svg_root
 	aspect \none
 	-
-	hue_base?val +NaN
-	hue_shift?val 111
+	hue_base? +NaN
+	hue_shift? 111
 	-
 	gap_hor 48
 	gap_vert 24
@@ -346,7 +346,7 @@ $mol_plot_pane $mol_svg_root
 	shift_default $mol_vector_2d /
 		0
 		0
-	shift?val $mol_vector_2d /
+	shift? $mol_vector_2d /
 		0
 		0
 	scale_limit $mol_vector_2d /
@@ -359,11 +359,11 @@ $mol_plot_pane $mol_svg_root
 	scale_default $mol_vector_2d /
 		0
 		0
-	scale?val $mol_vector_2d /
+	scale? $mol_vector_2d /
 		1
 		-1
-	scale_x?val 1
-	scale_y?val -1
+	scale_x? 1
+	scale_y? -1
 	size $mol_vector_2d /
 		0
 		0
@@ -391,8 +391,8 @@ $mol_plot_pane $mol_svg_root
 	plugins /
 		^
 		<= Touch $mol_touch
-			zoom?val <=> zoom?val 1
-			pan?val <=> shift?val
+			zoom? <=> zoom? 1
+			pan? <=> shift?
 			pointer_center => cursor_position
 			allow_draw <= allow_draw true
 			allow_pan <= allow_pan true
