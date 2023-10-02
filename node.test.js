@@ -5188,6 +5188,9 @@ var $;
 var $;
 (function ($) {
     class $mol_check_list extends $mol_view {
+        dictionary() {
+            return {};
+        }
         Option(id) {
             const obj = new this.$.$mol_check();
             obj.checked = (next) => this.option_checked(id, next);
@@ -5250,6 +5253,18 @@ var $;
         class $mol_check_list extends $.$mol_check_list {
             options() {
                 return {};
+            }
+            dictionary(next) {
+                return next ?? {};
+            }
+            option_checked(id, next) {
+                const prev = this.dictionary();
+                if (next === undefined)
+                    return prev[id] ?? null;
+                const next_rec = { ...prev, [id]: next };
+                if (next === null)
+                    delete next_rec[id];
+                return this.dictionary(next_rec)[id] ?? null;
             }
             keys() {
                 return Object.keys(this.options());
