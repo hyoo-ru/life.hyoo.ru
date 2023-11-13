@@ -904,6 +904,10 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    let $mol_mem_persist: typeof $mol_wire_solid;
+}
+
+declare namespace $ {
     export function $mol_wire_sync<Host extends object>(obj: Host): ObjectOrFunctionResultAwaited<Host>;
     type FunctionResultAwaited<Some> = Some extends (...args: infer Args) => infer Res ? (...args: Args) => Awaited<Res> : Some;
     type MethodsResultAwaited<Host extends Object> = {
@@ -914,21 +918,8 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    let $mol_mem_persist: typeof $mol_wire_solid;
-}
-
-declare namespace $ {
-    let $mol_mem_cached: typeof $mol_wire_probe;
-}
-
-declare namespace $ {
     class $mol_storage extends $mol_object2 {
-        static native(): {
-            estimate: () => StorageEstimate;
-            getDirectory: () => FileSystemDirectoryHandle;
-            persist: () => boolean;
-            persisted: () => boolean;
-        };
+        static native(): StorageManager;
         static persisted(next?: boolean): boolean;
         static estimate(): StorageEstimate;
         static dir(): FileSystemDirectoryHandle;
@@ -1861,6 +1852,10 @@ declare namespace $ {
         action_point(): $mol_vector_2d<number>;
         Touch(): $$.$mol_touch;
     }
+}
+
+declare namespace $ {
+    let $mol_mem_cached: typeof $mol_wire_probe;
 }
 
 declare namespace $.$$ {
