@@ -2,13 +2,14 @@ $hyoo_life $mol_page
 	title @ \the Life Game
 	plugins /
 		<= Theme $mol_theme_auto
+	speed? 0
 	head /
 		<= Title
 		<= Step $mol_button_minor
 			sub / <= Step_icon $mol_icon_step_forward
 			click <= step
 		<= Time $mol_switch
-			value?val <=> speed?val 0
+			value? <=> speed_str? \
 			options *
 				5 <= Normal $mol_icon_play
 				1000 <= Fast $mol_icon_fast_forward

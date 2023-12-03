@@ -19,6 +19,10 @@ namespace $.$$ {
 		snapshot() {
 			return this.$.$mol_state_arg.value( 'snapshot' ) ?? super.snapshot()
 		}
+
+		speed_str(next?: string) {
+			return String(this.speed(next === undefined ? next : Number(next)))
+		}
 		
 		step() {
 			this.speed(0)
