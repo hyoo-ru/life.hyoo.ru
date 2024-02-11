@@ -3,10 +3,11 @@ $hyoo_life_map $mol_plot_pane
 	gap_vert 0
 	-
 	zoom?val 16
-	scale $mol_vector_2d /
+	scale $mol_vector_2d<number> /
 		<= zoom
 		<= zoom
 	-
+	step null
 	style *
 		^
 		backgroundSize <= grid_size \
