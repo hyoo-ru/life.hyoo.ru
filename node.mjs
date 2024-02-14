@@ -7269,7 +7269,7 @@ var $;
 		}
 		Reset(){
 			const obj = new this.$.$mol_link();
-			(obj.hint) = () => (this.$.$mol_locale.text("$hyoo_life_Reset_hint"));
+			(obj.hint) = () => ((this.$.$mol_locale.text("$hyoo_life_Reset_hint")));
 			(obj.arg) = () => ({"snapshot": ""});
 			(obj.sub) = () => ([(this.Reset_icon())]);
 			return obj;
